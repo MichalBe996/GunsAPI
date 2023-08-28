@@ -27,6 +27,20 @@ app.get("/api/v1/guns", (req, res)=>{
     })
 })
 
+app.get("/api/v1/guns/:id", (req, res)=>{
+    const gun = gunzData.find(element => element.id === parseInt(req.params.id))
+    if(!gun){
+        return res.status(404).json({
+            status: "Fail",
+            message: `There is no gun with id: ${req.params.id}`
+        })
+    }
+    res.status(200).json({
+        status: "Success",
+        gun
+    })
+}) 
+
 app.post("/api/v1/guns", (req, res)=>{
     const newId = gunzData[gunzData.length - 1].id + 1;
     const newGun = {id: newId, ...req.body}
