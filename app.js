@@ -17,7 +17,7 @@ app.use(express.json())
 
 const port = 3000;
 
-app.get("/api/v1/guns", (req, res)=>{
+const getAllGuns = (req, res)=>{
     res.status(200).json({
         status: "success",
         quantity: gunzData.length,
@@ -25,9 +25,9 @@ app.get("/api/v1/guns", (req, res)=>{
             guns: gunzData
         }
     })
-})
+}
 
-app.get("/api/v1/guns/:id", (req, res)=>{
+const getSingleGun = (req, res)=>{
     const gun = gunzData.find(element => element.id === parseInt(req.params.id))
     if(!gun){
         return res.status(404).json({
@@ -39,9 +39,8 @@ app.get("/api/v1/guns/:id", (req, res)=>{
         status: "Success",
         gun
     })
-}) 
-
-app.post("/api/v1/guns", (req, res)=>{
+}
+const createNewGun = (req, res)=>{
     const newId = gunzData[gunzData.length - 1].id + 1;
     const newGun = {id: newId, ...req.body}
     gunzData.push(newGun)
@@ -52,9 +51,23 @@ app.post("/api/v1/guns", (req, res)=>{
         })
     })
     
-})
+}
 
-app.delete("/api/v1/guns/:id", (req, res)=>{
+const updateGun = (req, res) => {
+    const gun = gunzData.find(element=> element.id === parseInt(req.params.id))
+    if(!gun){
+        return res.status(404).json({
+            status: "Fail",
+            message: `No gun with id: ${req.params.id}`
+        })
+    }
+    res.status(200).json({
+        status: "Success",
+        message: "Element updated successfully"
+    })
+}
+
+const deleteGun = (req, res)=>{
     const singleID = parseInt(req.params.id);
     const index = gunzData.findIndex(e => e.id === singleID)
     if(index > 0){
@@ -76,7 +89,25 @@ app.delete("/api/v1/guns/:id", (req, res)=>{
     
     
     
-})
+}
+
+// app.get("/api/v1/guns", getAllGuns)
+// app.get("/api/v1/guns/:id", getSingleGun) 
+// app.post("/api/v1/guns", createNewGun)
+// app.patch("/api/v1/guns/:id", updateGun)
+// app.delete("/api/v1/guns/:id", deleteGun)
+
+
+app
+    .route("/api/v1/guns")
+    .get(getAllGuns)
+    .post(createNewGun)
+
+app
+    .route("/api/v1/guns/:id")
+    .get(getSingleGun)
+    .patch(updateGun)
+    .delete(deleteGun)
 
 
 
