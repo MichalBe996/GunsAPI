@@ -1,22 +1,26 @@
 
 const fs = require("fs")
 const express = require("express")
+const morgan = require("morgan")
 
 
 
 
+// 1) MIDDLEWARE 
 const gunzData = JSON.parse(
     fs.readFileSync(`${__dirname}/dev-data/data/gunz-data.json`)
 )
 
 
 const app = express();
-///// MIDDLEWARE --> gets body parameteres
+
+
 app.use(express.json())
+app.use(morgan("dev"))
 
 
-const port = 3000;
 
+// 2) ROUTE HANDLER
 const getAllGuns = (req, res)=>{
     res.status(200).json({
         status: "success",
@@ -97,7 +101,7 @@ const deleteGun = (req, res)=>{
 // app.patch("/api/v1/guns/:id", updateGun)
 // app.delete("/api/v1/guns/:id", deleteGun)
 
-
+// 3) ROUTES
 app
     .route("/api/v1/guns")
     .get(getAllGuns)
@@ -110,8 +114,8 @@ app
     .delete(deleteGun)
 
 
-
-
+//4) SERVER
+const port = 3000;
 app.listen(port, ()=>{
     console.log(`Server is listening on port ${port}...`)
 })
