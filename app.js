@@ -134,24 +134,33 @@ const deleteUser = (req, res) => {
 // app.delete("/api/v1/guns/:id", deleteGun)
 
 // 3) ROUTES
-app
-    .route("/api/v1/guns")
+
+const gunRouter = express.Router();
+const usersRouter = express.Router();
+app.use("/api/v1/guns", gunRouter);
+app.use("/api/v1/users", usersRouter);
+
+
+
+
+gunRouter
+    .route("/")
     .get(getAllGuns)
     .post(createNewGun)
 
-app
-    .route("/api/v1/guns/:id")
+gunRouter
+    .route("/:id")
     .get(getSingleGun)
     .patch(updateGun)
     .delete(deleteGun)
 
-app
-    .route("/api/v1/users")
+usersRouter
+    .route("/")
     .get(getAllUsers)
     .post(createUser)
 
-app
-    .route("/api/v1/users/:id")
+usersRouter
+    .route("/:id")
     .get(getUser)
     .patch(updateUser)
     .delete(deleteUser)
