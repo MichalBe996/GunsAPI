@@ -10,7 +10,7 @@ router.param("id", gunController.checkID)
 router
     .route("/")
     .get(gunController.getAllGuns)
-    .post(gunController.createNewGun)
+    .post(gunController.checkBody, gunController.createNewGun)
 
 router
     .route("/:id")
