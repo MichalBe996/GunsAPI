@@ -6,6 +6,18 @@ const gunzData = JSON.parse(
     fs.readFileSync(`./dev-data/data/gunz-data.json`)
 )
 
+exports.checkID = (req, res, next, val) => {
+    const gun = gunzData.find(element => element.id === parseInt(req.params.id))
+    if(!gun){
+        return res.status(404).json({
+            status: "Failed",
+            message: "Wrong ID"
+        })
+    }
+    next();
+}
+
+
 exports.getAllGuns = (req, res)=>{
     res.status(200).json({
         status: "success",
@@ -18,12 +30,6 @@ exports.getAllGuns = (req, res)=>{
 
 exports.getSingleGun = (req, res)=>{
     const gun = gunzData.find(element => element.id === parseInt(req.params.id))
-    if(!gun){
-        return res.status(404).json({
-            status: "Fail",
-            message: `There is no gun with id: ${req.params.id}`
-        })
-    }
     res.status(200).json({
         status: "Success",
         gun
@@ -44,12 +50,6 @@ exports.createNewGun = (req, res)=>{
 
 exports.updateGun = (req, res) => {
     const gun = gunzData.find(element=> element.id === parseInt(req.params.id))
-    if(!gun){
-        return res.status(404).json({
-            status: "Fail",
-            message: `No gun with id: ${req.params.id}`
-        })
-    }
     res.status(200).json({
         status: "Success",
         message: "Element updated successfully"

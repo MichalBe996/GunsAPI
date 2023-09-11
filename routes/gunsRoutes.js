@@ -2,7 +2,9 @@ const express = require("express")
 const gunController = require("../controllers/gunController")
 
 const router = express.Router();
+// param middleware, define param name and function as second argumetn
 
+router.param("id", gunController.checkID)
 
 
 router
