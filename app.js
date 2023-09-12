@@ -5,14 +5,20 @@ const gunRouter = require("./routes/gunsRoutes")
 
 
 
-
-// 1) MIDDLEWARE 
-
 const app = express();
 
 
+
+
+// 1) MIDDLEWARE 
+console.log(process.env.NODE_ENV)
+if(process.env.NODE_ENV === "development"){
+    app.use(morgan("dev"))
+}
+
+
+
 app.use(express.json())
-app.use(morgan("dev"))
 app.use((req, res, next)=>{
     req.requestTime = new Date().toISOString();
     console.log(req.requestTime)
