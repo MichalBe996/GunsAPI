@@ -1,0 +1,10 @@
+{
+    "extends": ["airbnb", "prettier", "plugin:node/recommended"],
+    "plugins": ["prettier"],
+    "rules": {
+        "no-unused-vars": ["error", {"argsIgnorePattern": "req|res|next|val|err"}],
+        "radix": "off",
+        "no-return-await": "off",
+        "no-console": "warn",
+    }
+}
