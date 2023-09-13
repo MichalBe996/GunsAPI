@@ -32,6 +32,15 @@ const gunSchema = new mongoose.Schema({
 
 const Gun = mongoose.model("Gun", gunSchema)
 
+const testGun = new Gun({
+    name: "Remington 870 Express",
+    price: 359.99,
+    type: "Semi Automatic"
+})
+// saving testGun to database
+testGun.save()
+    .then(doc => console.log(doc))
+    .catch(err => console.log("ERROR!:", err))
 
 
 const port = process.env.PORT || 3000;
