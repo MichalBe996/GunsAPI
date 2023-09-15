@@ -14,33 +14,8 @@ mongoose.connect(DB, {
 })
 .then(() => console.log("DB connection successful..."))
 
-const gunSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: [true, "Gun must have a name"],
-        unique: true
-    },
-    price: {
-        type: Number,
-        required: [true, "Gun must have a price"],
-    },
-    type: {
-        type: String,
-        required: [true, "The gun type must be defined"]
-    }
-})
 
-const Gun = mongoose.model("Gun", gunSchema)
 
-const testGun = new Gun({
-    name: "Remington 870 Express",
-    price: 359.99,
-    type: "Semi Automatic"
-})
-// saving testGun to database
-testGun.save()
-    .then(doc => console.log(doc))
-    .catch(err => console.log("ERROR!:", err))
 
 
 const port = process.env.PORT || 3000;

@@ -1,19 +1,8 @@
-const fs = require("fs");
+const Gun = require("../models/gunModel")
 
-const gunzData = JSON.parse(fs.readFileSync(`./dev-data/data/gunz-data.json`));
+//const gunzData = JSON.parse(fs.readFileSync(`./dev-data/data/gunz-data.json`));
 
-exports.checkID = (req, res, next, val) => {
-  const gun = gunzData.find(
-    (element) => element.id === parseInt(req.params.id),
-  );
-  if (!gun) {
-    return res.status(404).json({
-      status: "Failed",
-      message: "Wrong ID",
-    });
-  }
-  next();
-};
+
 
 exports.checkBody = (req, res, next) => {
   if (!req.body.name || !req.body.price) {
@@ -28,10 +17,10 @@ exports.checkBody = (req, res, next) => {
 exports.getAllGuns = (req, res) => {
   res.status(200).json({
     status: "success",
-    quantity: gunzData.length,
-    data: {
-      guns: gunzData,
-    },
+    // quantity: gunzData.length,
+    // data: {
+    //   guns: gunzData,
+    // },
   });
 };
 
@@ -45,19 +34,18 @@ exports.getSingleGun = (req, res) => {
   });
 };
 exports.createNewGun = (req, res) => {
-  const newId = gunzData[gunzData.length - 1].id + 1;
-  const newGun = { id: newId, ...req.body };
-  gunzData.push(newGun);
-  fs.writeFile(
-    `${__dirname}/dev-data/data/gunz-data.json`,
-    JSON.stringify(gunzData),
-    (err) => {
-      res.status(201).json({
+  const newGun = new Gun({
+    ...req.body
+  })
+  newGun.save()
+    .then(element => {
+      return res.status(201).json({
         status: "Success",
-        gun: newGun,
-      });
-    },
-  );
+        message: "New Gun added successfully!",
+        data: element
+      })
+  })
+  .catch(err => console.log(err))
 };
 
 exports.updateGun = (req, res) => {
