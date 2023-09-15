@@ -14,14 +14,12 @@ exports.checkBody = (req, res, next) => {
   next()
 };
 
-exports.getAllGuns = (req, res) => {
+exports.getAllGuns = async (req, res) => {
+  const allGuns = await Gun.find({})
   res.status(200).json({
-    status: "success",
-    // quantity: gunzData.length,
-    // data: {
-    //   guns: gunzData,
-    // },
-  });
+    status: "Success",
+    data: allGuns
+  })
 };
 
 exports.getSingleGun = (req, res) => {
