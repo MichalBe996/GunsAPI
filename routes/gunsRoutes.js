@@ -9,7 +9,7 @@ const router = express.Router();
 router
   .route("/")
   .get(gunController.getAllGuns)
-  .post(gunController.checkBody, gunController.createNewGun);
+  .post(gunController.createNewGun);
 
 router
   .route("/:id")

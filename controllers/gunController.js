@@ -4,22 +4,23 @@ const Gun = require("../models/gunModel")
 
 
 
-exports.checkBody = (req, res, next) => {
-  if (!req.body.name || !req.body.price) {
-    return res.status(400).json({
-      status: "Fail",
-      message: "Client must provide both name and price of the gun"
-    });
-  }
-  next()
-};
+
 
 exports.getAllGuns = async (req, res) => {
-  const allGuns = await Gun.find({})
-  res.status(200).json({
-    status: "Success",
-    data: allGuns
-  })
+
+  try {
+    const allGuns = await Gun.find({})
+    res.status(200).json({
+      status: "Success",
+      data: allGuns
+    })
+  } catch (err){
+    res.status(400).json({
+      status: "Fail",
+      message: err
+    })
+  }
+  
 };
 
 exports.getSingleGun = (req, res) => {
@@ -32,18 +33,21 @@ exports.getSingleGun = (req, res) => {
   });
 };
 exports.createNewGun = async (req, res) => {
-  const newGun = new Gun({
-    ...req.body
-  })
-  await newGun.save()
-    .then(element => {
-      return res.status(201).json({
-        status: "Success",
-        message: "New Gun added successfully!",
-        data: element
-      })
-  })
-  .catch(err => console.log(err))
+  try {
+    const newGun = await Gun.create({
+      ...req.body
+    })
+    res.status(201).json({
+      status: "Success",
+      message: "Gun added succesfully",
+      data: newGun
+    })
+  } catch(err){
+    res.status(400).json({
+      status: "Fail",
+      message: err
+    })
+  }
 };
 
 exports.updateGun = (req, res) => {
