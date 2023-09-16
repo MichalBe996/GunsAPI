@@ -31,11 +31,11 @@ exports.getSingleGun = (req, res) => {
     gun,
   });
 };
-exports.createNewGun = (req, res) => {
+exports.createNewGun = async (req, res) => {
   const newGun = new Gun({
     ...req.body
   })
-  newGun.save()
+  await newGun.save()
     .then(element => {
       return res.status(201).json({
         status: "Success",
