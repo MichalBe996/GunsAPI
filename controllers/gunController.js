@@ -12,10 +12,13 @@ exports.getAllGuns = async (req, res) => {
     const allGuns = await Gun.find({})
     res.status(200).json({
       status: "Success",
-      data: allGuns
+      results: allGuns.length,
+      data: {
+        allGuns
+      }
     })
   } catch (err){
-    res.status(400).json({
+    res.status(404).json({
       status: "Fail",
       message: err
     })
@@ -23,14 +26,21 @@ exports.getAllGuns = async (req, res) => {
   
 };
 
-exports.getSingleGun = (req, res) => {
-  const gun = gunzData.find(
-    (element) => element.id === parseInt(req.params.id),
-  );
-  res.status(200).json({
-    status: "Success",
-    gun,
-  });
+exports.getSingleGun =  async (req, res) => {
+  try {
+    const singleGun = await Gun.findById(req.params.id)
+    res.status(200).json({
+      status: "success",
+      data: {
+        singleGun
+      }
+    })
+  } catch (err) {
+    res.status(400).json({
+      status: "Fail",
+      message: err
+    })
+  }
 };
 exports.createNewGun = async (req, res) => {
   try {
