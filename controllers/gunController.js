@@ -60,35 +60,31 @@ exports.createNewGun = async (req, res) => {
   }
 };
 
-exports.updateGun = (req, res) => {
-  const gun = gunzData.find(
-    (element) => element.id === parseInt(req.params.id),
-  );
-  res.status(200).json({
-    status: "Success",
-    message: "Element updated successfully",
-  });
+exports.updateGun = async (req, res) => {
+  try {
+    const gun = await Gun.findByIdAndUpdate(req.params.id, req.body, {
+      //// below parameter returns new document after the update is applied
+      new: true
+    })
+    res.status(200).json({
+      status: "Success", 
+      data: {
+        gun: gun
+      }
+    })
+  } catch (err) {
+    res.status(404).json({
+      status: "Fail",
+      message: err
+    })
+  }
 };
 
 exports.deleteGun = (req, res) => {
-  const singleID = parseInt(req.params.id);
-  const index = gunzData.findIndex((e) => e.id === singleID);
-  if (index > 0) {
-    gunzData.splice(index, 1);
-    fs.writeFile(
-      `${__dirname}/dev-data/data/gunz-data.json`,
-      JSON.stringify(gunzData),
-      (err) => {
-        res.status(200).json({
-          status: "Success",
-          msg: `Element with id: ${singleID} has been deleted successfully.`,
-        });
-      },
-    );
-  } else {
-    res.json({
-      status: "Failed",
-      msg: "No element with such id number",
-    });
-  }
+  res.status(200).json({
+    status: "Success",
+    message: "Gun deleted successfully"
+  })
+  
 };
+
