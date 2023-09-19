@@ -64,7 +64,9 @@ exports.updateGun = async (req, res) => {
   try {
     const gun = await Gun.findByIdAndUpdate(req.params.id, req.body, {
       //// below parameter returns new document after the update is applied
-      new: true
+      new: true,
+      // runValidators checks e.g. whether parameters are of desired type
+      runValidators: true
     })
     res.status(200).json({
       status: "Success", 
@@ -80,11 +82,20 @@ exports.updateGun = async (req, res) => {
   }
 };
 
-exports.deleteGun = (req, res) => {
-  res.status(200).json({
-    status: "Success",
-    message: "Gun deleted successfully"
-  })
+exports.deleteGun = async (req, res) => {
+  try {
+    await Gun.findByIdAndDelete(req.params.id)
+    res.status(200).json({
+      status: "Success",
+      message: "Gun deleted successfully"
+    })
+  } catch (err) {
+    res.status(400).json({
+      status: "Fail",
+      message: err
+    })
+  }
+  
   
 };
 
