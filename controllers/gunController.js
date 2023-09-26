@@ -9,13 +9,26 @@ const Gun = require("../models/gunModel")
 exports.getAllGuns = async (req, res) => {
 
   try {
+    console.log(req.query)
     // BUILDING QUERY
+
+    // 1) FILTERING
     const queryObj = {...req.query}
-    console.log(queryObj)
     const exludedFields = ["page", "sort", "limit", "fields"]
     exludedFields.forEach(element => delete queryObj[element])
 
-    const query = Gun.find(queryObj)
+
+    // example query for greater than or equal operator
+    /// { price: {$gte: 500 }}
+
+    // 2) ADVANCED FILTERING
+
+    let queryStr = JSON.stringify(queryObj)
+    queryStr = queryStr.replace(/\bgte|gt|lte|lt\b/g, match => `$${match}`)
+    console.log(JSON.parse(queryStr))
+
+
+    const query = Gun.find(JSON.parse(queryStr))
     // EXECUTING THE QUERY
     const allGuns = await query;
 
