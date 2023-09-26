@@ -10,5 +10,43 @@
     "summary": "The Hatsan Arms Company of Turkey introduces the Escort Bull Tac pump-action shotgun, a bull-pup design available in 12, 20 and .410 gauge, designed to compete with some well-known US-made models",
     "stockMaterial": "Synthetic",
     "gauge": "12 Gauge"
-    }
+    },
+    {
+        "name": "Beretta 21A Bobcat Flat",
+        "imageCover": "Bobcat21A.jpg",
+        "capacity": "7+1",
+        "stockColor": "Flat Dark Earth",
+        "action": "Double action/single action",
+        "type": "Pistol",
+        "price": 411.99,
+        "summary": "The Beretta 21A Bobcat is a unique, diminutive firearm featuring a tip-up barrel design that makes for a reliable EDC or back-up pistol when carrying a full-sized handgun is impractical.",
+        "stockMaterial": "Stainless steel",
+        "gauge": ".22 long rifle"
+        },
+    {
+        "name": "Rossi SS Brawler .410",
+        "imageCover": "RossiSS.jpg",
+        "capacity": "1 round",
+        "stockColor": "Black",
+        "action": "Break Open",
+        "type": "Shotgun",
+        "price": 219.89,
+        "summary": "The new Brawler is a single shot .45 Colt/.410 pistol reminiscent of the Thompson Contender. It’s a big, simple, break open design with an exposed hammer and single action mechanism.",
+        "stockMaterial": "Synthetic",
+        "gauge": "45 Colt"
+        },
+        {
+        "name": "CZ 457 Varmint MTR .22 LR 20.5' Turkish Walnut",
+        "imageCover": "VarmintMTR.jpg",
+        "capacity": "5",
+        "stockColor": "Turkish Walnut",
+        "action": "Bolt",
+        "type": "Rifle",
+        "price": 793.09,
+        "summary": "The 457 Match Target Rifle's match chamber is cut to the tightest specification that CIP will allow, meaning it will perform impressively well with top-tier ammo.",
+        "stockMaterial": "Wood",
+        "gauge": "22 Long Rifle"
+        }
+      
+
 ]

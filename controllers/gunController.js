@@ -9,7 +9,30 @@ const Gun = require("../models/gunModel")
 exports.getAllGuns = async (req, res) => {
 
   try {
-    const allGuns = await Gun.find({})
+    // BUILDING QUERY
+    const queryObj = {...req.query}
+    console.log(queryObj)
+    const exludedFields = ["page", "sort", "limit", "fields"]
+    exludedFields.forEach(element => delete queryObj[element])
+
+    const query = Gun.find(queryObj)
+    // EXECUTING THE QUERY
+    const allGuns = await query;
+
+
+
+
+  
+
+    ////ONE WAY OF WRITING MONGOOSE QUERIES
+    // const query = Gun.find()
+    // .where("type")
+    // .equals("Shotgun")
+    // .where("stockMaterial")
+    // .equals("Synthetic")
+
+    // SEND RESPONSE
+
     res.status(200).json({
       status: "Success",
       results: allGuns.length,
