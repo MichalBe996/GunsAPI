@@ -12,7 +12,7 @@ exports.getAllGuns = async (req, res) => {
     console.log(req.query)
     // BUILDING QUERY
 
-    // 1) FILTERING
+    // 1A) FILTERING
     const queryObj = {...req.query}
     const exludedFields = ["page", "sort", "limit", "fields"]
     exludedFields.forEach(element => delete queryObj[element])
@@ -21,14 +21,27 @@ exports.getAllGuns = async (req, res) => {
     // example query for greater than or equal operator
     /// { price: {$gte: 500 }}
 
-    // 2) ADVANCED FILTERING
+    // 1B) ADVANCED FILTERING
 
     let queryStr = JSON.stringify(queryObj)
     queryStr = queryStr.replace(/\bgte|gt|lte|lt\b/g, match => `$${match}`)
-    console.log(JSON.parse(queryStr))
 
 
-    const query = Gun.find(JSON.parse(queryStr))
+
+    let query = Gun.find(JSON.parse(queryStr))
+
+    // 2) SORTING
+    if(req.query.sort){
+      const sortBy = req.query.sort.split(",").join(" ")
+      query = query.sort(req.query.sort)
+    } else {
+      query = query.sort("-createdAt")
+    }
+    // if values are the same for some examples, you can add second criteria --> .sort("price ratingsAverage")
+    // -price if user needs elements sorted in ascending order
+
+
+
     // EXECUTING THE QUERY
     const allGuns = await query;
 
