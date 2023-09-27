@@ -46,6 +46,20 @@ exports.getAllGuns = async (req, res) => {
       query = query.select("-__v")
     }
 
+    // 4) PAGINATION
+    // page=2&limit=10 ----> records 1-10 are on page 1, 11-20 page 2, and so on
+    const page = req.query.page * 1 || 1; 
+    const limit = req.query.limit * 1 || 1;
+    const skip = (page - 1) * limit;
+    // * 1 converts string to int, || 1 is default
+    query = query.skip(skip).limit(limit);
+
+
+    if(req.query.page){
+      const numTours = await Gun.countDocuments();
+      if(skip >= numTours) throw new Error("This page does not exist")
+    }
+
     // if values are the same for some examples, you can add second criteria --> .sort("price ratingsAverage")
     // -price if user needs elements sorted in ascending order
 
@@ -59,12 +73,6 @@ exports.getAllGuns = async (req, res) => {
 
   
 
-    ////ONE WAY OF WRITING MONGOOSE QUERIES
-    // const query = Gun.find()
-    // .where("type")
-    // .equals("Shotgun")
-    // .where("stockMaterial")
-    // .equals("Synthetic")
 
     // SEND RESPONSE
 
