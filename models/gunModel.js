@@ -67,7 +67,9 @@ const gunSchema = new mongoose.Schema({
     images: [String],
     createdAt: {
         type: Date,
-        default: Date.now()
+        default: Date.now(),
+        // select parameter can exclude parameter from response if set to false
+        select: false
     }
 
 })

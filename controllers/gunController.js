@@ -9,7 +9,6 @@ const Gun = require("../models/gunModel")
 exports.getAllGuns = async (req, res) => {
 
   try {
-    console.log(req.query)
     // BUILDING QUERY
 
     // 1A) FILTERING
@@ -37,6 +36,16 @@ exports.getAllGuns = async (req, res) => {
     } else {
       query = query.sort("-createdAt")
     }
+
+    // 3) FIELD LIMITING
+    if(req.query.fields){
+      const fields = req.query.fields.split(",").join(" ")
+      query = query.select(fields)
+    } else {
+      // excluding __v parameter
+      query = query.select("-__v")
+    }
+
     // if values are the same for some examples, you can add second criteria --> .sort("price ratingsAverage")
     // -price if user needs elements sorted in ascending order
 
