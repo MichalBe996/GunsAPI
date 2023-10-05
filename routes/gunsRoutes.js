@@ -6,6 +6,10 @@ const router = express.Router();
 
 //router.param("id", gunController.checkID);
 
+/// alias for top 3 cheapest
+router.route("/top-3-cheap").get(gunController.aliasTopGuns, gunController.getAllGuns)
+
+
 router
   .route("/")
   .get(gunController.getAllGuns)

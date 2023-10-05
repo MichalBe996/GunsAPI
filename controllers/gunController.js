@@ -2,8 +2,13 @@ const Gun = require("../models/gunModel")
 
 //const gunzData = JSON.parse(fs.readFileSync(`./dev-data/data/gunz-data.json`));
 
-
-
+/// function for aliasing top 3 cheapest guns
+exports.aliasTopGuns = (req, res, next) => {
+  req.query.limit = "3"
+  req.query.sort = "-price"
+  req.query.fields = "name, summary, price"
+  next();
+}
 
 
 exports.getAllGuns = async (req, res) => {
