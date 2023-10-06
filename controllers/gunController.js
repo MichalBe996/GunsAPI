@@ -1,4 +1,5 @@
 const Gun = require("../models/gunModel")
+const APIFeatures = require("../utils/apiFeatures")
 
 //const gunzData = JSON.parse(fs.readFileSync(`./dev-data/data/gunz-data.json`));
 
@@ -11,75 +12,22 @@ exports.aliasTopGuns = (req, res, next) => {
 }
 
 
+
 exports.getAllGuns = async (req, res) => {
 
   try {
-    // BUILDING QUERY
-
-    // 1A) FILTERING
-    const queryObj = {...req.query}
-    const exludedFields = ["page", "sort", "limit", "fields"]
-    exludedFields.forEach(element => delete queryObj[element])
-
-
-    // example query for greater than or equal operator
-    /// { price: {$gte: 500 }}
-
-    // 1B) ADVANCED FILTERING
-
-    let queryStr = JSON.stringify(queryObj)
-    queryStr = queryStr.replace(/\bgte|gt|lte|lt\b/g, match => `$${match}`)
-
-
-
-    let query = Gun.find(JSON.parse(queryStr))
-
-    // 2) SORTING
-    if(req.query.sort){
-      const sortBy = req.query.sort.split(",").join(" ")
-      query = query.sort(req.query.sort)
-    } else {
-      query = query.sort("-createdAt")
-    }
-
-    // 3) FIELD LIMITING
-    if(req.query.fields){
-      const fields = req.query.fields.split(",").join(" ")
-      query = query.select(fields)
-    } else {
-      // excluding __v parameter
-      query = query.select("-__v")
-    }
-
-    // 4) PAGINATION
-    // page=2&limit=10 ----> records 1-10 are on page 1, 11-20 page 2, and so on
-    const page = req.query.page * 1 || 1; 
-    const limit = req.query.limit * 1 || 1;
-    const skip = (page - 1) * limit;
-    // * 1 converts string to int, || 1 is default
-    query = query.skip(skip).limit(limit);
-
-
-    if(req.query.page){
-      const numTours = await Gun.countDocuments();
-      if(skip >= numTours) throw new Error("This page does not exist")
-    }
-
-    // if values are the same for some examples, you can add second criteria --> .sort("price ratingsAverage")
-    // -price if user needs elements sorted in ascending order
+    
 
 
 
     // EXECUTING THE QUERY
-    const allGuns = await query;
-
-
-
-
-  
-
-
-    // SEND RESPONSE
+    const features = new APIFeatures(Gun.find(), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate()
+    const allGuns = await features.query;
+ // SEND RESPONSE
 
     res.status(200).json({
       status: "Success",
