@@ -10,6 +10,9 @@ const router = express.Router();
 router.route("/top-3-cheap").get(gunController.aliasTopGuns, gunController.getAllGuns)
 
 
+router.route("/gun-stats").get(gunController.getGunStats)
+
+
 router
   .route("/")
   .get(gunController.getAllGuns)

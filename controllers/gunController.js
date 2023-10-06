@@ -104,12 +104,12 @@ exports.updateGun = async (req, res) => {
 exports.deleteGun = async (req, res) => {
   try {
     await Gun.findByIdAndDelete(req.params.id)
-    res.status(200).json({
+    res.status(204).json({
       status: "Success",
       message: "Gun deleted successfully"
     })
   } catch (err) {
-    res.status(400).json({
+    res.status(404).json({
       status: "Fail",
       message: err
     })
@@ -118,3 +118,40 @@ exports.deleteGun = async (req, res) => {
   
 };
 
+exports.getGunStats = async (req, res) => {
+  try {
+    const stats = await Gun.aggregate([
+      {
+        $match: { price: {$lte: 800}}
+      }, {
+        $group: {
+          _id: {$toUpper: `$type`},
+          numGuns: {$sum: 1},
+          numRatings: {$sum: `$ratingsQuantity`},
+          avgPrice: {$avg: `$price`},
+          avgRating: {$avg: `$ratingsAverage`},
+          minPrice: {$min: `$price`},
+          maxPrice: {$max: `$price`}
+        },
+        
+      },
+      {
+        $sort: { avgPrice: -1}
+      }
+
+      /// pipeline steps can be repeated
+      
+    ])
+    res.status(200).json({
+      status: "Success",
+      data: {
+        stats
+      }
+    })
+  } catch (err) {
+    res.status(404).json({
+      status: "Fail",
+      message: err
+    })
+  }
+}
