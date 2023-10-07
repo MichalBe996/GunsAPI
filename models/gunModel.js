@@ -1,5 +1,5 @@
 const mongoose = require("mongoose")
-
+const slugify = require("slugify")
 
 
 const gunSchema = new mongoose.Schema({
@@ -8,6 +8,9 @@ const gunSchema = new mongoose.Schema({
         required: [true, "Gun's name must be defined"],
         unique: true,
         trim: true
+    },
+    slug: {
+        type: String
     },
     gauge: {
         type: String,
@@ -72,6 +75,24 @@ const gunSchema = new mongoose.Schema({
         select: false
     }
 
+})
+// MONGOOSE MIDDLEWARE
+// this is called before .save command and .create command
+gunSchema.pre("save", function(next){
+    this.slug = slugify(this.name, {lower: true})
+    next();
+})
+
+gunSchema.pre("save", function(next){
+    console.log("About to save document...")
+    next();
+})
+
+
+// this middleware is called after the given method and has access not only to "next" parameter, but also to created document
+gunSchema.post("save", function(doc, next){
+    console.log(doc)
+    next();
 })
 
 const Gun = mongoose.model("Gun", gunSchema);
