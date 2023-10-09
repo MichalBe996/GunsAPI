@@ -7,7 +7,9 @@ const gunSchema = new mongoose.Schema({
         type: String,
         required: [true, "Gun's name must be defined"],
         unique: true,
-        trim: true
+        trim: true,
+        maxlength: [40, "A gun name must have less or equal than 40 characters!"],
+        minlength: [5, "A gun name must be 5 or more characters long!"]
     },
     slug: {
         type: String
@@ -43,8 +45,8 @@ const gunSchema = new mongoose.Schema({
     ratingsAverage: {
         type: Number,
         default: 3.0,
-        max: 5.0,
-        min: 0
+        max: [5, "Rating must be below 1.0!"],
+        min: [1, "Rating must be above 1.0!"]
     },
     ratingsQuantity: {
         type: Number,
