@@ -121,6 +121,14 @@ gunSchema.post(/^find/, function(docs, next){
     next();
 })
 
+// aggregation middleware
+
+gunSchema.pre("aggregate", function(next){
+    this.pipeline().unshift({ $match: {secretGun: {$ne: true}}})
+    console.log(this.pipeline())
+    next();
+})
+
 
 const Gun = mongoose.model("Gun", gunSchema);
 
