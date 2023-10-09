@@ -73,6 +73,10 @@ const gunSchema = new mongoose.Schema({
         default: Date.now(),
         // select parameter can exclude parameter from response if set to false
         select: false
+    },
+    secretGun: {
+        type: Boolean,
+        default: false
     }
 
 })
@@ -94,6 +98,29 @@ gunSchema.post("save", function(doc, next){
     console.log(doc)
     next();
 })
+
+
+
+/// this is query middleware 
+
+// regular expression
+
+
+// /^find/ ------ all the strings that start with find, so queries for finding all data, finding data by id etc.
+gunSchema.pre(/^find/, function(next){
+    this.find({ secretGun: {$ne: true}})
+    this.start = Date.now()
+    
+    next();
+})
+
+
+gunSchema.post(/^find/, function(docs, next){
+    console.log(docs);
+    console.log(`Query took: ${Date.now() - this.start} miliseconds`)
+    next();
+})
+
 
 const Gun = mongoose.model("Gun", gunSchema);
 
