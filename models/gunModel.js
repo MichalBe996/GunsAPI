@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 const slugify = require("slugify")
+const validator = require("validator")
 
 
 const gunSchema = new mongoose.Schema({
@@ -9,7 +10,8 @@ const gunSchema = new mongoose.Schema({
         unique: true,
         trim: true,
         maxlength: [40, "A gun name must have less or equal than 40 characters!"],
-        minlength: [5, "A gun name must be 5 or more characters long!"]
+        minlength: [5, "A gun name must be 5 or more characters long!"],
+        
     },
     slug: {
         type: String
@@ -36,7 +38,18 @@ const gunSchema = new mongoose.Schema({
         type: Number,
         required: [true, "Gun must have a price"],
     },
-    priceDiscount: Number,
+    
+    priceDiscount: {
+        type: Number,
+        validate: {
+            validator: function(val){
+                return val < this.price;
+            }
+        },
+        message: "Price discount must be lower than the regular price!"
+
+        },
+    
 
     type: {
         type: String,
