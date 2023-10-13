@@ -28,6 +28,8 @@ const Home = () => {
             name={element.name}
             summary={element.summary}
             price={element.price}
+            id={element._id}
+            img={element.imageCover}
     />
   })
   
@@ -44,7 +46,7 @@ const Home = () => {
     <div>
         <Navbar/>
         <div>TEST</div>
-        <div className="gun--cards--div" id="gan--cards--div">
+        <div className="gun--cards--div" id="gun--cards--div">
           {mappedCards}
         </div>
 
