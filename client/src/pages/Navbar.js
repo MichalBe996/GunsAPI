@@ -12,7 +12,7 @@ const Navbar = () => {
             <h1 className="header">GunsApp</h1>
             <img className="target--logo" src={target}></img>
         </div>
-        <div clasName="buttons--navbar">
+        <div className="buttons--navbar">
             <button>Test</button>
             <button>Test</button>
             <button>Test</button>

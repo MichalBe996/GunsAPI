@@ -2,6 +2,8 @@ const express = require("express")
 const morgan = require("morgan")
 const userRouter = require("./routes/userRoutes")
 const gunRouter = require("./routes/gunsRoutes")
+const cors = require("cors")
+
 
 
 
@@ -19,6 +21,7 @@ if(process.env.NODE_ENV === "development"){
 
 
 app.use(express.json())
+app.use(cors())
 app.use((req, res, next)=>{
     req.requestTime = new Date().toISOString();
     console.log(req.requestTime)
