@@ -12,7 +12,7 @@ const Home = () => {
   
   useEffect(()=> {
     axios
-    .get("http://localhost:5000/api/v1/guns?limit=5")
+    .get("http://localhost:5000/api/v1/guns?limit=10")
     .then((res)=>setData(res.data.data.allGuns))
     .catch(err=>{
       setError(err.message)
@@ -45,7 +45,7 @@ const Home = () => {
 
     <div>
         <Navbar/>
-        <div>TEST</div>
+
         <div className="gun--cards--div" id="gun--cards--div">
           {mappedCards}
         </div>

@@ -27,6 +27,10 @@
   margin: 0.25rem;
 }
 
+.header--header:hover {
+  cursor: pointer;
+}
+
 .target--logo {
   width: 3rem;
   height: 3rem;
@@ -90,7 +94,7 @@
 
 .gun--card--buttons {
   display: flex;
-  width: 17rem;
+  width: 19rem;
   gap: 10px;
   --b: 3px;   /* the border thickness */
   --h: 1.8em; /* the height */
