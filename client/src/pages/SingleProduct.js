@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams } from "react-router-dom"
+import { useParams, useNavigate } from "react-router-dom"
 import Navbar from './Navbar'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
@@ -7,6 +7,10 @@ import axios from 'axios'
 
 
 const SingleProduct = () => {
+    const navigate = useNavigate();
+    const redirectBack = () => {
+      navigate("/");
+    };
     
     const { id } = useParams();
     const [data, setData] = useState([])
@@ -21,9 +25,26 @@ const SingleProduct = () => {
   return (
     <div>
         <Navbar />
-        <h3>{data.name}</h3>
-        <p>{data.summary}
-        </p>
+        
+        <div className="single--gun--card">
+              <div className="single--gun--image">
+                <img src={data.imageCover}></img>
+              </div>
+              <div className="gun--parameters">
+                <h2>{data.name}</h2>
+                <h3>Price: {data.price}</h3>
+                <p className='card--gun--summary'>{data.summary}</p>
+                <h3>Stock material: {data.stockMaterial}</h3>
+                <h3>Gauge: {data.gauge}</h3>
+                <h3>Action: {data.action}</h3>
+                <h3>Capacity: {data.capacity}</h3>
+                <div className="single--card--buttons">
+                   <button onClick={redirectBack}>Go Back</button>
+                   <button>Add to Cart</button>
+        </div>
+              </div>
+        </div>
+        
     </div>
   )
 }
