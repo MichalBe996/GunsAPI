@@ -32,6 +32,7 @@ const SingleProduct = () => {
               </div>
               <div className="gun--parameters">
                 <h2>{data.name}</h2>
+                
                 <h3>Price: {data.price}</h3>
                 <p className='card--gun--summary'>{data.summary}</p>
                 <h3>Stock material: {data.stockMaterial}</h3>
