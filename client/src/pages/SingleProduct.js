@@ -40,8 +40,8 @@ const SingleProduct = () => {
                 <h3>Action: {data.action}</h3>
                 <h3>Capacity: {data.capacity}</h3>
                 <div className="single--card--buttons">
-                   <button onClick={redirectBack}>Go Back</button>
-                   <button>Add to Cart</button>
+                   <button className="single--card--button"onClick={redirectBack}>Go Back</button>
+                   <button className='single--card--button'>Add to Cart</button>
         </div>
               </div>
         </div>

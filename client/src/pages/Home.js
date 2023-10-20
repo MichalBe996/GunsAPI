@@ -70,42 +70,70 @@ const Home = () => {
 
               <div className="form--gun--type">
                 <h3>Type: </h3>
-                <div className="form--type--options">
-                <input
+                <table>
+                  <tr>
+                    <td className="type-radio">
+                    <input
                 onChange={handleChange}
                 name="type"
                 id="all"
                 type="radio"
                 value=""/>
-                <label htmlFor='all'>All</label>
-                <input
+                    </td>
+                    <td className="type-label">
+                    <label htmlFor='all'>All</label>
+                    </td>
+                    
+                
+                  </tr>
+                  <tr>
+                    <td className="type-radio">
+                    <input
               onChange={handleChange}
               name="type"
               id="pistol"
               type="radio"
               value="Pistol"/>
-                <label htmlFor='pistol'>Pistol</label>
-
-              <input
+                    </td>
+                    <td className="type-label">
+                    <label htmlFor='pistol'>Pistol</label>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="type-radio">
+                    <input
               onChange={handleChange}
               name="type"
               id="shotgun"
               type="radio"
               value="Shotgun"/>
-              <label htmlFor='shotgun'>Shotgun</label>
-              <input
+
+                    </td>
+                    <td className="type-label">
+                    <label htmlFor='shotgun'>Shotgun</label>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="type-radio">
+                    <input
               onChange={handleChange}
               name="type"
               id="rifle"
               type="radio"
               value="Rifle"/>
-              <label htmlFor='rifle'>Rifle</label>
+                    </td>
+                    <td className="type-label">
+                      <label htmlFor='rifle'>Rifle</label>
+                    </td>
+                  </tr>
+                </table>
                 </div>
-              </div>
-              
-              <button type='submit'>
+              <div>
+              <button type='submit' className="search--button">
                 Search
               </button>
+              </div>
+              
               
 
             </form>
