@@ -8,6 +8,9 @@ const Navbar = () => {
   const homeRedirect = () => {
     navigate("/");
   }
+  const cartRedirect = () => {
+    navigate("/cart");
+  }
   return (
     <nav className="nav-navbar">
 
@@ -18,9 +21,9 @@ const Navbar = () => {
             <img className="target--logo" src={target}></img>
         </div>
         <div className="buttons--navbar">
-            <button>Test</button>
-            <button>Test</button>
-            <button>Test</button>
+            <button onClick={homeRedirect}>Home</button>
+            <button onClick={cartRedirect}>Cart</button>
+            <button>About</button>
         </div>
     
     <Outlet/>

@@ -304,3 +304,33 @@ button:active:not(:focus-visible) {
   color: #008CBA;
 
 }
+
+
+.buttons--navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+
+.buttons--navbar > * {
+  margin: 0.5rem;
+  color: #6082B6;
+  background-color: white; 
+  border: none;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 0.25rem;
+  border-radius: 0.25rem;
+  border: 2px solid #6082B6;
+}
+
+.buttons--navbar > *:hover{
+  color: white;
+  background-color: #6082B6;
+  border: 2px solid white;
+
+}

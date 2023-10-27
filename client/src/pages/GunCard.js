@@ -6,6 +6,12 @@ const GunCard = (props) => {
    const redirectToInfo = () => {
     navigate(`/products/${props.id}`)
    }
+   const [cartItems, setCartItems] = React.useState([])
+   ////// ADDING TO CART NEEDS REFACTOR
+   let id = props.id
+   const addToCart = () => {
+    setCartItems([...cartItems, {id: props}])   
+   }  
   return (
     <div className="gun--div">
         <h1 id="gun--name">{props.name.substring(0, 23)}</h1>
@@ -13,11 +19,11 @@ const GunCard = (props) => {
         <h3 id="gun--price">${props.price}</h3>
         <div className="gun--card--buttons" id="gun--card--buttons">
             <button onClick={redirectToInfo}>See more</button>
-            <button>Add to cart</button>
+            <button onClick={addToCart}>Add to cart</button>
 
         </div>
     </div>
   )
-}
+  }
 
-export default GunCard
+export default GunCard;

@@ -5,7 +5,15 @@ const Cart = () => {
   return (
     <div>
         <Navbar/>
-        <h1>This is cart</h1>
+        <div className="cart--body">
+            <div className="cart--items">
+
+            </div>
+            <div className="cart--summary">
+
+            </div>
+
+        </div>
     </div>
   )
 }

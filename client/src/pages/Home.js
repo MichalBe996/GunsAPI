@@ -58,7 +58,8 @@ const Home = () => {
             img={element.imageCover}
     />
   })
-  
+
+
 
   return (
 
