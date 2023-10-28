@@ -7,7 +7,7 @@ const GunCard = (props) => {
    const redirectToInfo = () => {
     navigate(`/products/${props.id}`)
    }
-   const [itemQuant, setItemQuant] = React.useState(0)
+   const [itemQuant, setItemQuant] = React.useState(1)
    const [item, setItem] = React.useState({
     id: props.id,
     name: props.name,
@@ -20,10 +20,11 @@ const GunCard = (props) => {
    ////// ADDING TO CART NEEDS REFACTOR
    let id = props.id
    const addToCart = () => {
-   setItemQuant(prevState => prevState + 1)
+    setItemQuant(itemQuant + 1)
+   
    setItem({
     ...item,
-    quantity: itemQuant
+    quantity: itemQuant + 1
    })
    console.log(item)
   
