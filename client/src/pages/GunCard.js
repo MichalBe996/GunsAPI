@@ -1,4 +1,3 @@
-import { set } from 'mongoose';
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -28,7 +27,8 @@ const GunCard = (props) => {
    })
    console.log(item)
   
-
+   localStorage.setItem(id, JSON.stringify(item))
+   console.log(localStorage)
 
 
 
