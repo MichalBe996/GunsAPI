@@ -1,17 +1,42 @@
+import { set } from 'mongoose';
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+
 
 const GunCard = (props) => {
    const navigate = useNavigate();
    const redirectToInfo = () => {
     navigate(`/products/${props.id}`)
    }
-   const [cartItems, setCartItems] = React.useState([])
+   const [itemQuant, setItemQuant] = React.useState(0)
+   const [item, setItem] = React.useState({
+    id: props.id,
+    name: props.name,
+    price: props.price,
+    img: props.img,
+    quantity: itemQuant
+
+   })
+   
    ////// ADDING TO CART NEEDS REFACTOR
    let id = props.id
    const addToCart = () => {
-    setCartItems([...cartItems, {id: props}])   
-   }  
+   setItemQuant(prevState => prevState + 1)
+   setItem({
+    ...item,
+    quantity: itemQuant
+   })
+   console.log(item)
+  
+
+
+
+
+   }
+
+
+
+
   return (
     <div className="gun--div">
         <h1 id="gun--name">{props.name.substring(0, 23)}</h1>
