@@ -4,23 +4,11 @@ import Navbar from './Navbar'
 const Cart = () => {
 
   /// TO REFACTOR
-  const [cartItems, setCartItems] = React.useState([])
-  const [keyArr, setKeyArr] = React.useState([])
-  React.useEffect(()=>{
-    setKeyArr([
-      Object.keys(localStorage)
-    ])  
-    keyArr.map((element)=>[
-      setCartItems([
-        ...cartItems,
-        localStorage.getItem((element))
-      ])
-    ])
+  const [keyArr, setKeyArr] = React.useState([Object.keys(localStorage)])
     
-    },[])
   
 
-
+    
   
 
 
@@ -28,7 +16,8 @@ const Cart = () => {
     
   
   const showCart = () => {
-    console.log(JSON.parse(localStorage.getItem(keyArr[0])))
+    
+    console.log(JSON.parse(localStorage.getItem(Object.keys(localStorage)[1])))
   }
   return (
     <div>

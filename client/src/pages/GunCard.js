@@ -17,8 +17,9 @@ const GunCard = (props) => {
 
    })
    
+   
    ////// ADDING TO CART NEEDS REFACTOR
-   let id = toString(props.id)
+   let id = props.id
    const addToCart = () => {
     setItemQuant(itemQuant + 1)
    
@@ -27,6 +28,10 @@ const GunCard = (props) => {
     quantity: itemQuant + 1
    })
    console.log(item)
+
+   
+
+   
   
    localStorage.setItem(id, JSON.stringify(item))
    console.log(localStorage)
