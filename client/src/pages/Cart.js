@@ -6,17 +6,10 @@ const Cart = () => {
   /// TO REFACTOR
   const [keyArr, setKeyArr] = React.useState([Object.keys(localStorage)])
   const [cartItemsArr, setCartItemsArr] = React.useState([])
-  React.useEffect(()=>{
-    for(let i = 0; i < Object.keys(localStorage).length; i++){
-      setCartItemsArr(prevState => [
-        ...prevState,
-        JSON.parse(localStorage.getItem(Object.keys(localStorage)[i]))
+  
 
-      ])
- 
-    
-    }  
-  }, [])
+
+   
     
 
     
@@ -26,16 +19,18 @@ const Cart = () => {
 
     
   
-  const showCart = () => {
+  const emptyCart = () => {
     
-    console.log("CART ITEMS: ", cartItemsArr)
+    console.log(localStorage)
+
+
   }
   return (
     <div>
         <Navbar/>
         <div className="cart--body">
             <div className="cart--items">
-            <button onClick={showCart}>Show Cart</button>
+            <button onClick={emptyCart}>Empty cart</button>
             </div>
             <div className="cart--summary">
 
