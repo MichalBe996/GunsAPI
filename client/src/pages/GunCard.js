@@ -16,7 +16,7 @@ const GunCard = (props) => {
    const addToCart = () => {
     
   
-  console.log(cartItem)
+  
   if(cartItem===null){
     setCartItem({
       ...props,
@@ -24,11 +24,13 @@ const GunCard = (props) => {
     })
     
   }else{
-  
+    let item = ({...cartItem, quantity: cartItem.quantity + 1})
+    setCartItem(item)
   }
-  console.log(cartItem)
+  
 
-   
+  localStorage.setItem(id, JSON.stringify(cartItem))
+  console.log("Local Storage: ", localStorage)
    
    
   
