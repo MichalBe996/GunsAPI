@@ -8,39 +8,36 @@ const GunCard = (props) => {
     navigate(`/products/${props.id}`)
    }
    let id = props.id
-   const [item, setItem] = React.useState(()=> {
-    if(JSON.parse(localStorage.getItem(id)!== null)){
-      return {
-        name: props.name,
-        quantity: JSON.parse(localStorage.getItem(id)).quantity + 1
-      }
-    }
-    return {
-      name: props.name,
-      quantity: 1
-    }
-   })
    
+   const [cartItem, setCartItem] = React.useState(JSON.parse(localStorage.getItem(id)))
    
    ////// ADDING TO CART NEEDS REFACTOR
    
    const addToCart = () => {
     
+  
+  console.log(cartItem)
+  if(cartItem===null){
+    setCartItem({
+      ...props,
+      quantity: 1
+    })
     
+  }else{
+  
+  }
+  console.log(cartItem)
 
    
-
+   
    
   
-   localStorage.setItem(id, JSON.stringify(item))
-   console.log(localStorage)
-
 
 
    }
 
 
-
+  
 
   return (
     <div className="gun--div">
