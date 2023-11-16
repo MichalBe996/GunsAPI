@@ -9,31 +9,35 @@ const GunCard = (props) => {
    }
    let id = props.id
    
-   const [cartItem, setCartItem] = React.useState(JSON.parse(localStorage.getItem(id)))
+   const [cartItem, setCartItem] = React.useState({
+    id: props.id,
+    name: props.name,
+    img: props.img,
+    price: props.price,
+    quantity: 0
+   })
    
-   ////// ADDING TO CART NEEDS REFACTOR
+   ////// figure out how quantity stays on 1 when user adds the object to local storage for the second time
    
    const addToCart = () => {
     
   
-  
-  if(cartItem===null){
-    setCartItem({
-      ...props,
-      quantity: 1
-    })
+    let isInLocal = localStorage.getItem(id)
+    if(isInLocal === null){
+      localStorage.setItem(id, JSON.stringify(cartItem))
+    }else{
+      console.log("Already in storage")
+      setCartItem({
+        ...cartItem,
+        quantity: cartItem.quantity+1
+      })
+      localStorage.setItem(id,JSON.stringify(cartItem))
+      
+    }
     
-  }else{
-    let item = ({...cartItem, quantity: cartItem.quantity + 1})
-    setCartItem(item)
-  }
-  
-
-  localStorage.setItem(id, JSON.stringify(cartItem))
-  console.log("Local Storage: ", localStorage)
    
    
-  
+  console.log("Local Storage: ", JSON.parse(localStorage.getItem(id)))
 
 
    }
