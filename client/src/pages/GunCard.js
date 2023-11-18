@@ -8,6 +8,7 @@ const GunCard = (props) => {
     navigate(`/products/${props.id}`)
    }
    let id = props.id
+   const [isInLocalStorage, setIsInLocalStorage] = React.useState(false)
    const [cartItem, setCartItem] = React.useState({
     id: props.id,
     name: props.name,
@@ -20,27 +21,28 @@ const GunCard = (props) => {
    
    const addToCart = () => {
     
-  
-    let isInLocal = localStorage.getItem(id)
-    if(isInLocal === null){
-      setCartItem({
-        ...cartItem,
-        quantity: 1
-      })
-      localStorage.setItem(id, JSON.stringify(cartItem))
+    
+    JSON.parse(localStorage.getItem(id)) === null ? setIsInLocalStorage(false) : setIsInLocalStorage(true)
+    
+    if(!isInLocalStorage){
+       console.log("Cart item when it's not in local storage:", cartItem)
+       localStorage.setItem(id, JSON.stringify(cartItem))
     }else{
       console.log("Already in storage")
-      setCartItem(prevState=> ({
+      setCartItem(prevState=>({
         ...prevState,
-        quantity: prevState.quantity + 1
+        quantity: cartItem.quantity + 1
       }))
-      localStorage.setItem(id,JSON.stringify(cartItem))
-      
+      console.log("Cart item when it's already in storage: ", cartItem)
     }
+      
+    
+      
+    
     
    
    
-  console.log("Local Storage: ", JSON.parse(localStorage.getItem(id)))
+  
 
 
    }
