@@ -8,13 +8,12 @@ const GunCard = (props) => {
     navigate(`/products/${props.id}`)
    }
    let id = props.id
-   
    const [cartItem, setCartItem] = React.useState({
     id: props.id,
     name: props.name,
     img: props.img,
     price: props.price,
-    quantity: 0
+    quantity: 1
    })
    
    ////// figure out how quantity stays on 1 when user adds the object to local storage for the second time
@@ -24,13 +23,17 @@ const GunCard = (props) => {
   
     let isInLocal = localStorage.getItem(id)
     if(isInLocal === null){
+      setCartItem({
+        ...cartItem,
+        quantity: 1
+      })
       localStorage.setItem(id, JSON.stringify(cartItem))
     }else{
       console.log("Already in storage")
-      setCartItem({
-        ...cartItem,
-        quantity: cartItem.quantity+1
-      })
+      setCartItem(prevState=> ({
+        ...prevState,
+        quantity: prevState.quantity + 1
+      }))
       localStorage.setItem(id,JSON.stringify(cartItem))
       
     }
