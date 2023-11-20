@@ -27,9 +27,9 @@ const GunCard = (props) => {
     }))
 
 
-    localStorage.setItem(id, JSON.stringify(cartItem))
+    localStorage.setItem(toString(id), JSON.stringify(cartItem))
 
-    console.log(JSON.parse(localStorage.getItem(id)))
+    console.log(JSON.parse(localStorage.getItem(toString(id))))
     
     
       
