@@ -14,17 +14,17 @@ const Home = () => {
 
 
   function addToCart(props){
-    setCartItems(prevState=>([
-      ...prevState,
+    setCartItems([
+      ...cartItems,
       {
-        name: props.name,
         id: props.id,
-        img: props.img,
-        quantity: 1
+        name: props.name,
+        img: props.img
       }
-    ]))
-    console.log(cartItems)
+    ])
+    
   }
+  console.log("Cart items: ", cartItems)
 
   const handleChange = (e) => {
     const target = e.target
