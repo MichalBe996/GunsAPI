@@ -10,7 +10,21 @@ const Home = () => {
   const [formData, setFormData] = useState({
     type: ""
   })
-  
+  const [cartItems, setCartItems] = React.useState([])
+
+
+  function addToCart(props){
+    setCartItems(prevState=>([
+      ...prevState,
+      {
+        name: props.name,
+        id: props.id,
+        img: props.img,
+        quantity: 1
+      }
+    ]))
+    console.log(cartItems)
+  }
 
   const handleChange = (e) => {
     const target = e.target
@@ -47,6 +61,7 @@ const Home = () => {
 
 
   }, [])
+  
 
   const mappedCards = data.map((element)=>{
     return <GunCard 
@@ -56,6 +71,7 @@ const Home = () => {
             price={element.price}
             id={element._id}
             img={element.imageCover}
+            addToCart={addToCart}
     />
   })
 
