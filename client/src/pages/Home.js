@@ -10,18 +10,28 @@ const Home = () => {
   const [formData, setFormData] = useState({
     type: ""
   })
-  const [cartItems, setCartItems] = React.useState([])
+  const [cartItems, setCartItems] = React.useState({})
+
 
 
   function addToCart(props){
-    setCartItems([
-      ...cartItems,
-      {
-        id: props.id,
-        name: props.name,
-        img: props.img
-      }
-    ])
+   if(JSON.parse(localStorage.getItem(props.id))===null){
+    let cartItem = {
+      id: props.id,
+      name: props.name,
+      img: props.img,
+      amount: 1
+     }
+     localStorage.setItem(props.id, JSON.stringify(cartItem))
+   }else {
+    let cartItem = JSON.parse(localStorage.getItem(props.id))
+    cartItem.amount += 1
+    localStorage.setItem(props.id, JSON.stringify(cartItem))
+   }
+   
+   
+
+    
     
   }
   console.log("Cart items: ", cartItems)
