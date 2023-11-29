@@ -5,7 +5,7 @@ const Cart = () => {
 
   /// TO REFACTOR
   const [keyArr, setKeyArr] = React.useState([Object.keys(localStorage)])
-  const [cartItemsArr, setCartItemsArr] = React.useState(localStorage)
+  
  
 
    
@@ -20,7 +20,7 @@ const Cart = () => {
   
   const emptyCart = () => {
     
-    console.log(cartItemsArr)
+    console.log(JSON.parse(localStorage.getItem(keyArr[0])))
 
   }
   return (
