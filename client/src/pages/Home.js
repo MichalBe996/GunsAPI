@@ -20,6 +20,7 @@ const Home = () => {
       id: props.id,
       name: props.name,
       img: props.img,
+      price: props.price,
       amount: 1
      }
      localStorage.setItem(props.id, JSON.stringify(cartItem))
