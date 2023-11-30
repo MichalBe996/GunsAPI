@@ -1,5 +1,6 @@
 import React from 'react'
 import Navbar from './Navbar'
+import CartItem from './CartItem'
 
 const Cart = () => {
 
@@ -23,19 +24,23 @@ const Cart = () => {
 
 
     
+  const mappedCartItems = cart.map((element)=> {
+    return <CartItem 
+            name={element.name}
+            img={element.img}
+            amount={element.amount}
+            price={element.price}
+    />
+  })
   
-  const emptyCart = () => {
-    
-    console.log("CART: ", cart)
-  
-
-  }
   return (
     <div>
         <Navbar/>
         <div className="cart--body">
             <div className="cart--items">
-            <button onClick={emptyCart}>Empty cart</button>
+              {mappedCartItems}
+            
+
             </div>
             <div className="cart--summary">
 
