@@ -347,9 +347,10 @@ button:active:not(:focus-visible) {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   margin: 2rem;
-  margin-left: 4rem;
+  margin-left: 7rem;
+  margin-top: 3rem;
   background-color: #6082B6;
   color: white;
 }
@@ -361,6 +362,7 @@ button:active:not(:focus-visible) {
 
 .cart--item--card > img {
   height: 7rem;
+  min-width: 150px;
   width: auto;
   border-radius: 10px;
 }

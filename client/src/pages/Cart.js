@@ -16,7 +16,33 @@ const Cart = () => {
       ])
     }
   }, [])
+
+
+  const incrementAmount = (id) => {
+    const cartObject = JSON.parse(localStorage.getItem(id))
+    cartObject.amount += 1;
+    localStorage.setItem(id, JSON.stringify(cartObject))
+    cart.forEach(element=>{
+      if(element.id===id){
+        setCart(...prevState=>[
+          ...prevState,
+          {
+            amount: element.amount + 1
+          }
+        ])
+      }
+    })
     
+    console.log(localStorage)
+  }
+  const decrementAmount = (id) => {
+    const cartObject = JSON.parse(localStorage.getItem(id))
+    cartObject.amount -= 1;
+    localStorage.setItem(id, JSON.stringify(cartObject))
+    
+    console.log(localStorage)
+  }
+     
 
     
   
@@ -30,6 +56,10 @@ const Cart = () => {
             img={element.img}
             amount={element.amount}
             price={element.price}
+            id={element.id}
+            incrementAmount={incrementAmount}
+            decrementAmount={decrementAmount}
+
     />
   })
   

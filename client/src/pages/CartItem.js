@@ -11,13 +11,13 @@ const CartItem = (props) => {
                 <div className="cart--amount--div">
                 <h4>Amount: {props.amount}</h4>
                 <div className="cart--amount--buttons">
-                    <button>+</button>
-                    <button>-</button>
+                    <button onClick={()=>props.incrementAmount(props.id)}>+</button>
+                    <button onClick={()=>props.decrementAmount(props.id)}>-</button>
                 </div>
                 
                 </div>
                 
-                <h4>Total Price: </h4>
+                <h4>Total Price: {props.price * props.amount}$</h4>
              </div>
         </div>
 
