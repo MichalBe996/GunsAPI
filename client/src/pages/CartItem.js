@@ -1,6 +1,13 @@
 import React from 'react'
 
 const CartItem = (props) => {
+  const [amountOfItems, setAmountOfItems] = React.useState(props.amount)
+  const incrementAmount = () => {
+    setAmountOfItems(amountOfItems + 1)
+  }
+  const decrementAmount = () => {
+    setAmountOfItems(amountOfItems - 1)
+  }
   return (
     <div className="cart--item--card">
         <img className="cart--item--image" src={props.img}></img>
@@ -9,15 +16,15 @@ const CartItem = (props) => {
              <div className="cart--item--price">
                 <h4>Price: {props.price}</h4>
                 <div className="cart--amount--div">
-                <h4>Amount: {props.amount}</h4>
+                <h4>Amount: {amountOfItems}</h4>
                 <div className="cart--amount--buttons">
-                    <button onClick={()=>props.incrementAmount(props.id)}>+</button>
-                    <button onClick={()=>props.decrementAmount(props.id)}>-</button>
+                    <button onClick={incrementAmount}>+</button>
+                    <button onClick={decrementAmount}>-</button>
                 </div>
                 
                 </div>
                 
-                <h4>Total Price: {props.price * props.amount}$</h4>
+                <h4>Total Price: {props.price * amountOfItems}$</h4>
              </div>
         </div>
 
