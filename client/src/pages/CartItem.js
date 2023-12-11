@@ -6,8 +6,13 @@ const CartItem = (props) => {
     setAmountOfItems(amountOfItems + 1)
   }
   const decrementAmount = () => {
-    setAmountOfItems(amountOfItems - 1)
-    props.checkAmount(amountOfItems, props.id)
+    if(amountOfItems > 1){
+      setAmountOfItems(amountOfItems - 1)
+    }else {
+      props.deleteFromCart(props.id)
+    }
+    
+   
 
     
   }

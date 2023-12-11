@@ -18,14 +18,12 @@ const Cart = () => {
   }, [])
 
 
- 
+ const deleteFromCart = (id) => {
+  const filteredCart = cart.filter(function(element){return element.id !== id})
+  setCart(filteredCart)
+ }
 
-  const checkAmount = (amount, id) => {
-      if(amount===1){
-        let filteredArray = cart.filter(function(element){return element.id != id})
-        setCart(filteredArray)
-      }
-    }
+ 
   
   
 
@@ -39,7 +37,7 @@ const Cart = () => {
             amount={element.amount}
             price={element.price}
             id={element.id}
-            checkAmount={checkAmount}
+            deleteFromCart={deleteFromCart}
             
 
     />
