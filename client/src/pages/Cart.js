@@ -20,7 +20,13 @@ const Cart = () => {
 
  
 
-    
+  const checkAmount = (amount, id) => {
+      if(amount===1){
+        let filteredArray = cart.filter(function(element){return element.id != id})
+        setCart(filteredArray)
+      }
+    }
+  
   
 
 
@@ -33,6 +39,7 @@ const Cart = () => {
             amount={element.amount}
             price={element.price}
             id={element.id}
+            checkAmount={checkAmount}
             
 
     />

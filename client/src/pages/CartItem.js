@@ -7,6 +7,9 @@ const CartItem = (props) => {
   }
   const decrementAmount = () => {
     setAmountOfItems(amountOfItems - 1)
+    props.checkAmount(amountOfItems, props.id)
+
+    
   }
   return (
     <div className="cart--item--card">
