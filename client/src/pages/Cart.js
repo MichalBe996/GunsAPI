@@ -34,7 +34,7 @@ const Cart = () => {
 
   const decrementAmount = (amount, setAmount, id) => {
     if(amount === 1){
-      setCart(cart.filter(function(element){return element.id ==! id}))
+      setCart(cart.filter(function(element){return element.id !== id}))
       
     }else {
       setAmount(amount - 1)
