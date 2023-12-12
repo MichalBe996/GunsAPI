@@ -18,13 +18,30 @@ const Cart = () => {
   }, [])
 
 
- const deleteFromCart = (id) => {
-  const filteredCart = cart.filter(function(element){return element.id !== id})
-  setCart(filteredCart)
- }
+  const incrementAmount = (amount, setAmount, id) => {
+    setAmount(amount + 1);
+    let item = cart.filter(function(element){return element.id === id});
+    item.amount = amount;
+    let newCart = cart;
+    newCart.forEach(element=>{
+      if(element.id === id){
+        element = item;
+      }
+    })
+    setCart(newCart)
+    
+  }
 
- 
-  
+  const decrementAmount = (amount, setAmount, id) => {
+    if(amount === 1){
+      setCart(cart.filter(function(element){return element.id ==! id}))
+      
+    }else {
+      setAmount(amount - 1)
+    }
+    
+  }
+
   
 
 
@@ -37,7 +54,9 @@ const Cart = () => {
             amount={element.amount}
             price={element.price}
             id={element.id}
-            deleteFromCart={deleteFromCart}
+            incrementAmount={incrementAmount}
+            decrementAmount={decrementAmount}
+            
             
 
     />

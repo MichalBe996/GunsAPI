@@ -2,20 +2,12 @@ import React from 'react'
 
 const CartItem = (props) => {
   const [amountOfItems, setAmountOfItems] = React.useState(props.amount)
-  const incrementAmount = () => {
-    setAmountOfItems(amountOfItems + 1)
-  }
-  const decrementAmount = () => {
-    if(amountOfItems > 1){
-      setAmountOfItems(amountOfItems - 1)
-    }else {
-      props.deleteFromCart(props.id)
-    }
+  
     
    
 
     
-  }
+  
   return (
     <div className="cart--item--card">
         <img className="cart--item--image" src={props.img}></img>
@@ -26,8 +18,12 @@ const CartItem = (props) => {
                 <div className="cart--amount--div">
                 <h4>Amount: {amountOfItems}</h4>
                 <div className="cart--amount--buttons">
-                    <button onClick={incrementAmount}>+</button>
-                    <button onClick={decrementAmount}>-</button>
+                    <button onClick={()=>{
+                      props.incrementAmount(amountOfItems, setAmountOfItems, props.id)
+                    }}>+</button>
+                    <button onClick={()=> {
+                      props.decrementAmount(amountOfItems, setAmountOfItems, props.id)
+                    }}>-</button>
                 </div>
                 
                 </div>
