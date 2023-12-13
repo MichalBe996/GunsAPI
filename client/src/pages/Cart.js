@@ -23,7 +23,7 @@ const Cart = () => {
       ...cartItem,
       amount: cartItem.amount + 1
     })
-    
+    localStorage.setItem(id, JSON.stringify(cartItem))
     
   }
 
@@ -32,6 +32,10 @@ const Cart = () => {
       ...cartItem,
       amount: cartItem.amount - 1
     })
+    if(cartItem.amount === 1){
+      let newArray = cart.filter(function(element){return element.id !== id})
+      setCart(newArray)
+    }
     
   }
 
