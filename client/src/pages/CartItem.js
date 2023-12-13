@@ -1,7 +1,15 @@
 import React from 'react'
 
 const CartItem = (props) => {
-  const [amountOfItems, setAmountOfItems] = React.useState(props.amount)
+  const [cartItem, setCartItem] = React.useState({
+    id: props.id,
+    name: props.name,
+    img: props.img,
+    amount: props.amount,
+    price: props.price
+
+  })
+
   
     
    
@@ -12,23 +20,23 @@ const CartItem = (props) => {
     <div className="cart--item--card">
         <img className="cart--item--image" src={props.img}></img>
         <div className="cart--item--info">
-             <h3>{props.name}</h3>
+             <h3>{cartItem.name}</h3>
              <div className="cart--item--price">
-                <h4>Price: {props.price}</h4>
+                <h4>Price: {cartItem.price}</h4>
                 <div className="cart--amount--div">
-                <h4>Amount: {amountOfItems}</h4>
+                <h4>Amount: {cartItem.amount}</h4>
                 <div className="cart--amount--buttons">
                     <button onClick={()=>{
-                      props.incrementAmount(amountOfItems, setAmountOfItems, props.id)
+                      props.incrementAmount(cartItem, setCartItem, cartItem.id)
                     }}>+</button>
                     <button onClick={()=> {
-                      props.decrementAmount(amountOfItems, setAmountOfItems, props.id)
+                      props.decrementAmount(cartItem, setCartItem, cartItem.id)
                     }}>-</button>
                 </div>
                 
                 </div>
                 
-                <h4>Total Price: {props.price * amountOfItems}$</h4>
+                <h4>Total Price: {cartItem.price * cartItem.amount}$</h4>
              </div>
         </div>
 
