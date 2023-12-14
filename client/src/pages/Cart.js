@@ -19,31 +19,36 @@ const Cart = () => {
 
 
   const incrementAmount = (cartItem, setCartItem, id) => {
-    setCartItem({
+    let newCartItem = {
       ...cartItem,
       amount: cartItem.amount + 1
-    })
-    localStorage.setItem(id, JSON.stringify(cartItem))
+    }
+    setCartItem(newCartItem)
+    console.log(newCartItem)
+    localStorage.setItem(id, JSON.stringify(newCartItem))
     
   }
 
   const decrementAmount = (cartItem, setCartItem, id) => {
-    if(cartItem.amount === 1){
-      localStorage.removeItem(id)
-      setKeyArr(Object.keys(localStorage))
-      let newArray = cart.filter(function(element){return element.id !== id})
-      setCart(newArray)
-    }else{
-      setCartItem({
-        ...cartItem,
+    ////// THIS NEEDS FIX
+      let newCartItem = {
+        ...cartItem, 
         amount: cartItem.amount - 1
-      })
-      localStorage.setItem(id, JSON.stringify(cartItem))
+      }
+      setCartItem(newCartItem)
+      if(newCartItem.amount === 0){
+        let newCart = cart.filter(function(element){return element.id !== id})
+        setCart(newCart)
+        localStorage.removeItem(id)
+      }else{
+        localStorage.setItem(id, JSON.stringify(newCartItem))
+      }
+      
     }
     
     
     
-  }
+  
 
   
 

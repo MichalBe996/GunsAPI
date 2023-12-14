@@ -376,7 +376,7 @@ button:active:not(:focus-visible) {
 }
 
 .cart--item--price > * {
-  padding: 0.25rem;
+  padding: 0.1rem;
 }
 
 .cart--amount--buttons {

@@ -20,7 +20,7 @@ const CartItem = (props) => {
     <div className="cart--item--card">
         <img className="cart--item--image" src={props.img}></img>
         <div className="cart--item--info">
-             <h3>{cartItem.name}</h3>
+             <h3>{cartItem.name.slice(0, 15)}</h3>
              <div className="cart--item--price">
                 <h4>Price: {cartItem.price}</h4>
                 <div className="cart--amount--div">
@@ -36,7 +36,7 @@ const CartItem = (props) => {
                 
                 </div>
                 
-                <h4>Total Price: {cartItem.price * cartItem.amount}$</h4>
+                <h4>Total Price: {(cartItem.price * cartItem.amount).toFixed(2)}$</h4>
              </div>
         </div>
 
