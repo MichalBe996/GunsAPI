@@ -30,25 +30,15 @@ const Cart = () => {
   }
 
   const decrementAmount = (cartItem, setCartItem, id) => {
-    ////// THIS NEEDS FIX
-      let newCartItem = {
-        ...cartItem, 
-        amount: cartItem.amount - 1
-      }
-      setCartItem(newCartItem)
-      if(newCartItem.amount === 0){
-        let newCart = cart.filter(function(element){return element.id !== id})
-        setCart(newCart)
-        localStorage.removeItem(id)
-      }else{
-        localStorage.setItem(id, JSON.stringify(newCartItem))
-      }
-      
-    }
+     setCartItem({
+      ...cartItem,
+      amount: cartItem.amount -= 1
+     })
     
     
     
-  
+    
+    }  
 
   
 

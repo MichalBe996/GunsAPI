@@ -22,6 +22,32 @@ const SingleProduct = () => {
         
         
     }, [])
+
+    function addToCart(){
+      if(JSON.parse(localStorage.getItem(id))===null){
+       let cartItem = {
+         id: id,
+         name: data.name,
+         img: data.imageCover,
+         price: data.price,
+         amount: 1
+        }
+        localStorage.setItem(id, JSON.stringify(cartItem))
+      }else {
+       let cartItem = JSON.parse(localStorage.getItem(id))
+       cartItem.amount += 1
+       localStorage.setItem(id, JSON.stringify(cartItem))
+      }
+      
+      
+   
+       
+       
+     }
+ 
+       
+      
+     
   return (
     <div>
         <Navbar />
@@ -41,7 +67,7 @@ const SingleProduct = () => {
                 <h3>Capacity: {data.capacity}</h3>
                 <div className="single--card--buttons">
                    <button className="single--card--button"onClick={redirectBack}>Go Back</button>
-                   <button className='single--card--button'>Add to Cart</button>
+                   <button className='single--card--button' onClick={addToCart}>Add to Cart</button>
         </div>
               </div>
         </div>
