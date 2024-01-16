@@ -8,6 +8,7 @@ const Cart = () => {
   const [keyArr, setKeyArr] = React.useState(Object.keys(localStorage))
   const [cart, setCart] = React.useState([])
   console.log(keyArr)
+  console.log("Cart: ", cart)
   React.useEffect(()=>{
     for(let i=0; i< keyArr.length; i++){
       setCart(prevState=>[
@@ -30,10 +31,25 @@ const Cart = () => {
   }
 
   const decrementAmount = (cartItem, setCartItem, id) => {
-     setCartItem({
+    let newCartItem = {
       ...cartItem,
-      amount: cartItem.amount -= 1
-     })
+      amount: cartItem.amount -1
+    }
+     if(newCartItem.amount > 0){
+      setCartItem(newCartItem)
+      localStorage.setItem(id, JSON.stringify(newCartItem))
+
+     
+     }if(newCartItem.amount === 0){
+      localStorage.removeItem(id)
+      setKeyArr(Object.keys(localStorage))
+      console.log("NEW ARRAY OF KEYS", keyArr)
+      const newCart = cart.filter(function(element){return element.id !== id})
+      console.log("NEW CART:", newCart)
+      setCart(newCart)
+     }
+
+     
     
     
     
