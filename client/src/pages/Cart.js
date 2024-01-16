@@ -10,6 +10,7 @@ const Cart = () => {
   console.log(keyArr)
   console.log("Cart: ", cart)
   React.useEffect(()=>{
+    
     for(let i=0; i< keyArr.length; i++){
       setCart(prevState=>[
         ...prevState,
@@ -18,7 +19,7 @@ const Cart = () => {
     }
   }, [])
 
-
+  
   const incrementAmount = (cartItem, setCartItem, id) => {
     let newCartItem = {
       ...cartItem,
@@ -26,6 +27,14 @@ const Cart = () => {
     }
     setCartItem(newCartItem)
     console.log(newCartItem)
+    let cartArray = cart;
+    for(let i=0; i < cartArray.length; i++){
+      if(cartArray[i].id === id){
+        cartArray[i] = newCartItem;
+      }
+    }
+    setCart(cartArray)
+    console.log("NEW CART", cart)
     localStorage.setItem(id, JSON.stringify(newCartItem))
     
   }
@@ -35,20 +44,24 @@ const Cart = () => {
       ...cartItem,
       amount: cartItem.amount -1
     }
-     if(newCartItem.amount > 0){
+    let cartArray = cart;
+    if(newCartItem.amount > 0){
       setCartItem(newCartItem)
+      for(let i=0; i < cartArray.length; i++){
+        if(cartArray[i].id === id){
+          cartArray[i] = newCartItem;
+        }
+      }
+      setCart(cartArray)
       localStorage.setItem(id, JSON.stringify(newCartItem))
-
-     
-     }if(newCartItem.amount === 0){
+    }
+    else{
+      let newCartArray = cartArray.filter(function(element){return element.id !== id})
+      setCart(newCartArray)
       localStorage.removeItem(id)
-      setKeyArr(Object.keys(localStorage))
-      console.log("NEW ARRAY OF KEYS", keyArr)
-      const newCart = cart.filter(function(element){return element.id !== id})
-      console.log("NEW CART:", newCart)
-      setCart(newCart)
-     }
-
+    }
+   
+    
      
     
     
