@@ -7,16 +7,16 @@ const Cart = () => {
   /// TO REFACTOR
   const [keyArr, setKeyArr] = React.useState(Object.keys(localStorage))
   const [cart, setCart] = React.useState([])
+  
   console.log(keyArr)
   console.log("Cart: ", cart)
   React.useEffect(()=>{
-    
+    let newCart = []
     for(let i=0; i< keyArr.length; i++){
-      setCart(prevState=>[
-        ...prevState,
-        JSON.parse(localStorage.getItem(keyArr[i]))
-      ])
+      newCart.push(JSON.parse(localStorage.getItem(keyArr[i])))
     }
+    console.log("CART VARIABLE:", newCart)
+    setCart(newCart)
   }, [])
 
   
@@ -40,27 +40,23 @@ const Cart = () => {
   }
 
   const decrementAmount = (cartItem, setCartItem, id) => {
-    let newCartItem = {
-      ...cartItem,
-      amount: cartItem.amount -1
-    }
-    let cartArray = cart;
-    if(newCartItem.amount > 0){
-      setCartItem(newCartItem)
-      for(let i=0; i < cartArray.length; i++){
-        if(cartArray[i].id === id){
-          cartArray[i] = newCartItem;
-        }
-      }
-      setCart(cartArray)
-      localStorage.setItem(id, JSON.stringify(newCartItem))
-    }
-    else{
-      let newCartArray = cartArray.filter(function(element){return element.id !== id})
-      setCart(newCartArray)
+    if(cartItem.amount === 1){
+      console.log("ITEM REMOVED")
       localStorage.removeItem(id)
+      setKeyArr(Object.keys(localStorage))
+      console.log(keyArr)
+      let filteredCart = cart.filter(function(element){return element.id !== id})
+      console.log("FILTERED", filteredCart)
+    }else{
+      let newCartItem = {
+        ...cartItem,
+        amount: cartItem.amount -1
+      }
+     
+      setCartItem(newCartItem)
+      console.log(newCartItem)
     }
-   
+    
     
      
     
