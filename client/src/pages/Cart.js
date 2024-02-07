@@ -39,23 +39,21 @@ const Cart = () => {
     
   }
 
+
+
   const decrementAmount = (cartItem, setCartItem, id) => {
-    if(cartItem.amount === 1){
-      console.log("ITEM REMOVED")
-      localStorage.removeItem(id)
-      setKeyArr(Object.keys(localStorage))
-      console.log(keyArr)
-      let filteredCart = cart.filter(function(element){return element.id !== id})
-      console.log("FILTERED", filteredCart)
-    }else{
+    
       let newCartItem = {
         ...cartItem,
-        amount: cartItem.amount -1
+        amount: cartItem.amount - 1
       }
-     
       setCartItem(newCartItem)
-      console.log(newCartItem)
-    }
+
+      }
+    
+    
+
+    
     
     
      
@@ -63,7 +61,7 @@ const Cart = () => {
     
     
     
-    }  
+    
 
   
 
