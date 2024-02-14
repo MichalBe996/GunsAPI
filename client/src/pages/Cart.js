@@ -1,6 +1,7 @@
 import React from 'react'
 import Navbar from './Navbar'
 import CartItem from './CartItem'
+import {unmountComponentAtNode} from "react-dom"
 
 const Cart = () => {
 
@@ -42,12 +43,27 @@ const Cart = () => {
 
 
   const decrementAmount = (cartItem, setCartItem, id) => {
-    
-      let newCartItem = {
-        ...cartItem,
-        amount: cartItem.amount - 1
-      }
-      setCartItem(newCartItem)
+        let newCartItem = {
+          ...cartItem,
+          amount: cartItem.amount - 1
+
+        }
+        if(newCartItem.amount !== 0){
+          let cartArray = cart;
+          cartArray.forEach(element=>{
+            if(element.id === id){
+              element = newCartItem;
+            }
+          })
+          setCartItem(newCartItem)
+        }else {
+          let newCart = cart.filter(function(element){return element.id !== id})
+          setCart(newCart)
+        }
+        
+        
+      
+      
 
       }
     
@@ -55,7 +71,7 @@ const Cart = () => {
 
     
     
-    
+
      
     
     
