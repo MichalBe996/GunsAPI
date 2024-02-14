@@ -1,7 +1,7 @@
 import React from 'react'
 import Navbar from './Navbar'
 import CartItem from './CartItem'
-import {unmountComponentAtNode} from "react-dom"
+
 
 const Cart = () => {
 
@@ -9,15 +9,24 @@ const Cart = () => {
   const [keyArr, setKeyArr] = React.useState(Object.keys(localStorage))
   const [cart, setCart] = React.useState([])
   
-  console.log(keyArr)
-  console.log("Cart: ", cart)
+  
   React.useEffect(()=>{
-    let newCart = []
-    for(let i=0; i< keyArr.length; i++){
-      newCart.push(JSON.parse(localStorage.getItem(keyArr[i])))
+    /// POPULATING THE CART ON RERENDER
+    // let newCart = []
+    // for(let i=0; i< keyArr.length; i++){
+    //   newCart.push(JSON.parse(localStorage.getItem(keyArr[i])))
+    // }
+    // console.log("CART VARIABLE:", newCart)
+    // setCart(newCart)
+    if(!keyArr){
+      setCart([])
+    }else{
+      let newCart = []
+      keyArr.forEach(element=>{
+        newCart.push(JSON.parse(localStorage.getItem(element)))
+      })
+      setCart(newCart)
     }
-    console.log("CART VARIABLE:", newCart)
-    setCart(newCart)
   }, [])
 
   
@@ -55,10 +64,12 @@ const Cart = () => {
               element = newCartItem;
             }
           })
+          localStorage.setItem(id, JSON.stringify(newCartItem))
           setCartItem(newCartItem)
         }else {
-          let newCart = cart.filter(function(element){return element.id !== id})
-          setCart(newCart)
+        let cartArray = cart;
+        console.log(cartArray)
+        console.log(cart.indexOf((element)=>{return element.id == id}))
         }
         
         
