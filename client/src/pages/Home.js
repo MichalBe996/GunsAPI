@@ -16,35 +16,30 @@ const Home = () => {
 
   function addToCart(props){
     ////// WORKING 
-  //  if(JSON.parse(localStorage.getItem(props.id))===null){
-  //   let cartItem = {
-  //     id: props.id,
-  //     name: props.name,
-  //     img: props.img,
-  //     price: props.price,
-  //     amount: 1
-  //    }
-  //    localStorage.setItem(props.id, JSON.stringify(cartItem))
-  //  }else {
-  //   let cartItem = JSON.parse(localStorage.getItem(props.id))
-  //   cartItem.amount += 1
-  //   localStorage.setItem(props.id, JSON.stringify(cartItem))
-  //  }
+   if(JSON.parse(localStorage.getItem(props.id))===null){
+    let cartItem = {
+      id: props.id,
+      name: props.name,
+      img: props.img,
+      price: props.price,
+      amount: 1
+     }
+     localStorage.setItem(props.id, JSON.stringify(cartItem))
+   }else {
+    let cartItem = JSON.parse(localStorage.getItem(props.id))
+    cartItem.amount += 1
+    localStorage.setItem(props.id, JSON.stringify(cartItem))
+   }
 
-  let cartItem = {
-    id: props.id,
-    name: props.name,
-    img: props.img,
-    price: props.price
-  }
-  let cartSet = cartItems;
-  cartSet.push(cartItem)
-  setCartItems(cartSet)
+
+ 
    
 
+
+ 
+
    
-   localStorage.setItem("localCart", JSON.stringify(cartItems))
-   console.log("LOCAL STORAGE: ", JSON.parse(localStorage.getItem("localCart")))
+   
 
 
     
