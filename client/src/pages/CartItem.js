@@ -30,9 +30,11 @@ const CartItem = (props) => {
                 <div className="cart--amount--buttons">
                     <button onClick={()=>{
                       props.incrementAmount(cartItem, setCartItem, cartItem.id)
+                      
                     }}>+</button>
                     <button onClick={()=> {
                       props.decrementAmount(cartItem, setCartItem, cartItem.id)
+                      
                     }}>-</button>
                 </div>
                 
