@@ -9,10 +9,11 @@ const Cart = () => {
   
   const [storageKeys, setStorageKeys] = React.useState(Object.keys(localStorage))
   const [cart, setCart] = React.useState([])
+  console.log("KEYS FROM STORAGE: ", storageKeys)
   
   React.useEffect(()=>{
     let newCart = []
-    if(storageKeys){
+    if(storageKeys.length > 0){
       storageKeys.forEach(element=>{
         let cartItem = JSON.parse(localStorage.getItem(element))
         newCart.push(cartItem)
@@ -28,7 +29,7 @@ const Cart = () => {
       })
     }
     
-  },[cart])
+  },[])
   
   
   
@@ -62,9 +63,22 @@ const Cart = () => {
           amount: cartItem.amount - 1
 
         }
-        
+        if(newCartItem.amount===0){
+          let filteredCart = cart.filter(function(element){return element.id ==id})
+          let filteredKeyArr = storageKeys.filter(function(element){return element !== id})
+          setStorageKeys(filteredKeyArr)
+          localStorage.removeItem(id)
+          console.log("REMOVED FROM THE CART", filteredCart)
+          setCart(filteredCart)
+          if(cart.length === 1){
+            setCart([])
+          }
+        }else{
           localStorage.setItem(id, JSON.stringify(newCartItem))
           setCartItem(newCartItem)
+        }
+        
+          
        
         
         
@@ -89,7 +103,7 @@ const Cart = () => {
 
 
 
-    
+
   const mappedCartItems = cart.map((element)=> {
     
         return <CartItem 

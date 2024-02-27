@@ -1,6 +1,7 @@
 import React from 'react'
 
 const CartItem = (props) => {
+ 
   const [cartItem, setCartItem] = React.useState({
     id: props.id,
     name: props.name,
@@ -9,6 +10,7 @@ const CartItem = (props) => {
     price: props.price
 
   })
+  
 
   
     
