@@ -1,16 +1,15 @@
 import React from 'react'
 import Navbar from './Navbar'
 import CartItem from './CartItem'
-import { useNavigate } from 'react-router-dom'
 
 
 const Cart = () => {
 
-  /// TO REFACTOR
-  const navigate = useNavigate();
+
   
   const [storageKeys, setStorageKeys] = React.useState(Object.keys(localStorage))
   const [cart, setCart] = React.useState([])
+  const [totalPrice, setTotalPrice] = React.useState(0)
   console.log("KEYS FROM STORAGE: ", storageKeys)
   
   React.useEffect(()=>{
@@ -19,6 +18,7 @@ const Cart = () => {
       storageKeys.forEach(element=>{
         let cartItem = JSON.parse(localStorage.getItem(element))
         newCart.push(cartItem)
+        setTotalPrice(prevState=> prevState + cartItem.amount *cartItem.price)
       })
   
       setCart(newCart)
@@ -141,7 +141,8 @@ const Cart = () => {
 
             </div>
             <div className="cart--summary">
-
+                <h2>Cart summary: {cart.length === 0 && <h2>Your cart is empty!</h2>}</h2>
+                <h3>Total price: {totalPrice}</h3>
             </div>
 
         </div>
