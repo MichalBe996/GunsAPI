@@ -18,7 +18,7 @@ const Cart = () => {
       storageKeys.forEach(element=>{
         let cartItem = JSON.parse(localStorage.getItem(element))
         newCart.push(cartItem)
-        setTotalPrice(prevState=> prevState + cartItem.amount *cartItem.price)
+        setTotalPrice(prevState => prevState + cartItem.amount * cartItem.price)
       })
   
       setCart(newCart)
@@ -54,6 +54,7 @@ const Cart = () => {
     setCart(cartArray)
     console.log("NEW CART", cart)
     localStorage.setItem(id, JSON.stringify(newCartItem))
+    setTotalPrice(prevState => prevState + cartItem.price)
     
   }
 
@@ -65,6 +66,7 @@ const Cart = () => {
           amount: cartItem.amount - 1
 
         }
+        setTotalPrice(prevState => prevState - cartItem.price)
        
         if(newCartItem.amount===0){
           let filteredCart = cart.filter(function(element){return element.id !== id})
@@ -142,7 +144,7 @@ const Cart = () => {
             </div>
             <div className="cart--summary">
                 <h2>Cart summary: {cart.length === 0 && <h2>Your cart is empty!</h2>}</h2>
-                <h3>Total price: {totalPrice}</h3>
+                <h3>Total price: {totalPrice.toFixed(2)}$</h3>
             </div>
 
         </div>
