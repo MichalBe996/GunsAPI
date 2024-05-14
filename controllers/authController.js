@@ -1,5 +1,6 @@
 const User = require("../models/userModel")
 const jwt = require("jsonwebtoken")
+const AppError = require("../utils/appError")
 
 
 
@@ -30,4 +31,24 @@ exports.signup = async (req, res, next) => {
         })
     }
     
+}
+
+exports.login = (req, res, next) => {
+    // getting the variables from the body object
+    const {email, password} = req.body;
+
+    // 1) Check if email and passwords exists
+    if(!email || !password){
+        return next(new AppError("Please provide email and password!", 400))
+    }
+
+    // 2) Check if user exists && password is correct
+    const user = User.findOne({ email });
+
+    // 3) If everything ok, send token to client
+    const token = "";
+    res.status(200).json({
+        status: "success",
+        token
+    })
 }

@@ -1,3 +1,11 @@
+const Gun = require("../models/gunModel")
+const APIFeatures = require("../utils/apiFeatures")
+
+
+
+
+
+
 exports.getAllUsers = (req, res) => {
     res.status(500).json({
         status: "Error",

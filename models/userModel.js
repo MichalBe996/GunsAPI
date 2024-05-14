@@ -20,7 +20,8 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         minlength: 8,
-        required: [true, "Password must be provided"]
+        required: [true, "Password must be provided"],
+        select: false
     },
     passwordConfirm: {
         type: String,
