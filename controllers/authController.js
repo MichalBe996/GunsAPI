@@ -70,9 +70,18 @@ exports.login =  async (req, res, next) => {
      
     }      
     
-exports.protect = async (req, res, next) => {
-    // 1) Getting the token and checking if it's there
 
+exports.protect = async (req, res, next) => {
+    let token;
+    // 1) Getting the token and checking if it's there
+    if(req.headers.authorization && req.headers.authorization.startsWith("Bearer")){
+        token = req.headers.authorization.split(" ")[1];
+        
+    }
+    console.log(token)
+    if(!token){
+        return next(new AppError("You are not logged in! Please login to gain access", 401))
+    }
     // 2) Validating the token 
 
 
