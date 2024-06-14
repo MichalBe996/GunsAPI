@@ -1,5 +1,6 @@
 const express = require("express");
 const gunController = require("../controllers/gunController");
+const authController = require("../controllers/authController")
 
 const router = express.Router();
 // param middleware, define param name and function as second argument
@@ -15,7 +16,7 @@ router.route("/gun-stats").get(gunController.getGunStats)
 
 router
   .route("/")
-  .get(gunController.getAllGuns)
+  .get(authController.protect, gunController.getAllGuns)
   .post(gunController.createNewGun);
 
 router
