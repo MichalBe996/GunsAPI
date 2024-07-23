@@ -23,6 +23,6 @@ router
   .route("/:id")
   .get(gunController.getSingleGun)
   .patch(gunController.updateGun)
-  .delete(gunController.deleteGun);
+  .delete(authController.protect, authController.restrictTo("admin"), gunController.deleteGun);
 
 module.exports = router;
