@@ -14,6 +14,9 @@ const Navbar = () => {
   const loginRedirect = () => {
     navigate('/login')
   }
+  const registerRedirect = () => {
+    navigate("/register")
+  }
   return (
     <nav className="nav-navbar">
 
@@ -28,6 +31,7 @@ const Navbar = () => {
             <button onClick={cartRedirect}>Cart</button>
             <button>Register</button>
             <button onClick={loginRedirect}>Login</button>
+            <button onClick={registerRedirect}>Register</button>
             <button>About</button>
         </div>
     
