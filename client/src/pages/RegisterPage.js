@@ -21,7 +21,7 @@ const RegisterPage = () => {
             'Content-Type': 'text/plain'
         };
         await axios.post(
-            "http://localhost:5000/api/v1/users/signup",
+            "https://localhost:5000/api/v1/users/signup",
             {
                 name: registerData.name,
                 email: registerData.email,
