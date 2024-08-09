@@ -4,7 +4,8 @@ import axios from 'axios'
 
 const RegisterPage = () => {
     axios.defaults.headers.post['Content-Type'] ='application/x-www-form-urlencoded';
-    const [registerData, setRegisterData] = React.useState({})
+    const [registerData, setRegisterData] = React.useState({role: "user"})
+    axios.defaults.withCredentials = true;
     const handleChange = (e) => {
         const target = e.target;
         const name = target.name;
@@ -17,19 +18,15 @@ const RegisterPage = () => {
     }
     const handleSubmit = async (e)=> {
         e.preventDefault()
-        const headers = {
-            'Content-Type': 'text/plain'
-        };
-        await axios.post(
-            "https://localhost:5000/api/v1/users/signup",
+        
+        await fetch("http://localhost:5000/api/v1/users/signup",
             {
-                name: registerData.name,
-                email: registerData.email,
-                password: registerData.password,
-                passwordConfirm: registerData.passwordConfirm
-            },
-            {headers}
-        ).then(response=>{
+                method: "POST",
+                mode: "cors",
+                body: JSON.stringify(registerData)
+            }
+        )
+        .then(response=>{
             console.log("Success ======>", response)
         }).catch(error=>{
             console.log("Error====>", error)
