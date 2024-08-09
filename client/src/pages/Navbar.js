@@ -29,7 +29,7 @@ const Navbar = () => {
         <div className="buttons--navbar">
             <button onClick={homeRedirect}>Home</button>
             <button onClick={cartRedirect}>Cart</button>
-            <button>Register</button>
+            <button onClick={registerRedirect}>Register</button>
             <button onClick={loginRedirect}>Login</button>
             <button onClick={registerRedirect}>Register</button>
             <button>About</button>

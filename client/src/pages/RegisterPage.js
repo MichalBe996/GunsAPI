@@ -3,7 +3,6 @@ import Navbar from './Navbar'
 import axios from 'axios'
 
 const RegisterPage = () => {
-    axios.defaults.headers.post['Content-Type'] ='application/x-www-form-urlencoded';
     const [registerData, setRegisterData] = React.useState({role: "user"})
     axios.defaults.withCredentials = true;
     const handleChange = (e) => {
@@ -23,7 +22,9 @@ const RegisterPage = () => {
             {
                 method: "POST",
                 mode: "cors",
-                body: JSON.stringify(registerData)
+                body: registerData,
+                headers: {"Content-type": "application/json"}
+                
             }
         )
         .then(response=>{

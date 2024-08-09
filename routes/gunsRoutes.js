@@ -16,7 +16,7 @@ router.route("/gun-stats").get(gunController.getGunStats)
 
 router
   .route("/")
-  .get(authController.protect, gunController.getAllGuns)
+  .get(gunController.getAllGuns)
   .post(gunController.createNewGun);
 
 router

@@ -144,7 +144,7 @@ const Cart = () => {
             </div>
             <div className="cart--summary">
                 <h2>Cart summary: {cart.length === 0 && <h2>Your cart is empty!</h2>}</h2>
-                <h3>Total price: {totalPrice.toFixed(2)}$</h3>
+                {cart.length !== 0 && <h3>Total price: {totalPrice.toFixed(2)}$</h3>}
             </div>
 
         </div>
