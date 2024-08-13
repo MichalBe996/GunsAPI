@@ -17,23 +17,26 @@ const RegisterPage = () => {
     }
     const handleSubmit = async (e)=> {
         e.preventDefault()
-        
-        await fetch("http://localhost:5000/api/v1/users/signup",
-            {
-                method: "POST",
-                mode: "cors",
-                body: registerData,
-                headers: {"Content-type": "application/json"}
-                
+        await axios.post(
+            "http://localhost:5000/api/v1/users/signup",{
+                name: registerData.name,
+                email: registerData.email,
+                password: registerData.password,
+                passwordConfirm: registerData.passwordConfirm
+            },{
+                headers: {
+                    "Content-Type": "application/json"
+                }
             }
         )
-        .then(response=>{
-            console.log("Success ======>", response)
-        }).catch(error=>{
-            console.log("Error====>", error)
+        .then((res)=>{
+            console.log("Server response: ", res)
+        })
+        .catch((err)=>{
+            console.log("Server error: ", err)
         })
         
-    }
+    }     
   return (
     <div>
         <Navbar/>
