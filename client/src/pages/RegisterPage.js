@@ -25,7 +25,9 @@ const RegisterPage = () => {
                 passwordConfirm: registerData.passwordConfirm
             },{
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    withCredentials: true
+                    
                 }
             }
         )

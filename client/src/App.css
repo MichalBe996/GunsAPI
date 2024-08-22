@@ -66,6 +66,7 @@
   width: 15rem;
   max-width: 15rem;
   margin: 2.5rem;
+
   
   
 }
@@ -125,7 +126,6 @@ tr {
   height: 20rem;
   padding: 0.5rem;
   text-align: center;
-  box-shadow: 1px 8px 10px -10px rgba(66, 68, 90, 1);
   text-overflow: ellipsis;
   
 }
