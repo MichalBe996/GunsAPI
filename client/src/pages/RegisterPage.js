@@ -67,6 +67,7 @@ const RegisterPage = () => {
                             </td>
                             <td className='register-textbox'>
                                 <input 
+                                class="register-input"
                                 onChange={handleChange}
                                 name="email"
                                 id="email"
@@ -81,6 +82,7 @@ const RegisterPage = () => {
                             </td>
                             <td className='register-textbox'>
                                 <input 
+                                className="register-input"
                                 onChange={handleChange}
                                 name="password"
                                 id="password"
@@ -95,6 +97,7 @@ const RegisterPage = () => {
                             </td>
                             <td className='register-textbox'>
                                 <input 
+                                className='register-input'
                                 onChange={handleChange}
                                 name="passwordConfirm"
                                 id="passwordConfirm"
@@ -105,8 +108,9 @@ const RegisterPage = () => {
                         </tr>
                         
                 </table>
-                <button type="submit">Create account</button>
+                
             </form>
+            <button className="register-submit-button" type="submit">Create account</button>
         </div>
     </div>
   )

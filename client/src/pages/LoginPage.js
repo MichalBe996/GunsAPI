@@ -16,10 +16,12 @@ const LoginPage = () => {
         
     }
     const handleSubmit = async (e)=> {
+        e.preventDefault()
         try {
             const response = await axios.post("https://localhost:5000/api/v1/users/login", {loginData});
             setMessage(response.data.message)
             console.log(response)
+            alert("User successfully logged in!")
         } catch (error) {
             console.error('Error logging in:', error);
             setMessage('An error occurred');
