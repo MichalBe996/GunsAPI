@@ -40,7 +40,7 @@ const LoginPage = () => {
                     <table>
                         <tr>
                         <td className="login-label">
-                                <label htmlFor='email'>E-mail</label>
+                                <label htmlFor='email'>E-mail:</label>
                             </td>
                             <td className='login-textbox'>
                                 <input 
@@ -54,7 +54,7 @@ const LoginPage = () => {
                         </tr>
                         <tr>
                         <td className="login-label">
-                                <label htmlFor='password'>Password</label>
+                                <label htmlFor='password'>Password:</label>
                             </td>
                             <td className='login-textbox'>
                                 <input 
@@ -66,10 +66,11 @@ const LoginPage = () => {
                             </td>
                             
                         </tr>
-                        <button type='submit' className="login--button">
+                        
+                    </table>
+                    <button type='submit' className="login--button">
                             Login
                         </button>
-                    </table>
 
                 </form>
             </div>
