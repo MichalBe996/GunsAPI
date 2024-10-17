@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const LoginPage = () => {
     const [loginData, setLoginData] = React.useState({})
-    const [message, setMessage] = React.useState('');
+    axios.defaults.withCredentials = true;
     const handleChange = (e) => {
         const target = e.target;
         const name = target.name;
@@ -15,19 +15,32 @@ const LoginPage = () => {
         })
         
     }
-    const handleSubmit = async (e)=> {
+    const handleSubmit = async(e) => {
         e.preventDefault()
-        try {
-            const response = await axios.post("https://localhost:5000/api/v1/users/login", {loginData});
-            setMessage(response.data.message)
-            console.log(response)
-            alert("User successfully logged in!")
-        } catch (error) {
-            console.error('Error logging in:', error);
-            setMessage('An error occurred');
-        }
-        
+        await axios.post(
+            "http://localhost:5000/api/v1/users/login",{
+                email: loginData.email,
+                password: loginData.password,
+
+            },{
+                headers: {
+                    "Content-Type": "application/json",
+                    withCredentials: true,
+                    
+                    
+                }
+            }
+        )
+        .then((res)=>{
+            console.log("Server response: ", res)
+            alert("User have been logged in successfully!")
+        })
+        .catch((err)=>{
+            console.log("Server error: ", err)
+        })
+
     }
+    
 
     
   return (

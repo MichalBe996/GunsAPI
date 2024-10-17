@@ -34,6 +34,7 @@ const RegisterPage = () => {
         )
         .then((res)=>{
             console.log("Server response: ", res)
+        
         })
         .catch((err)=>{
             console.log("Server error: ", err)
