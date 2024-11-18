@@ -9,6 +9,9 @@ const  sendEmail = async options => {
         auth: {
             user: process.env.EMAIL_USERNAME,
             pass: process.env.EMAIL_PASSWORD
+        },
+        tls: {
+            rejectUnauthorized: false
         }
 
         // Activate in gmail "less secure app" option
@@ -20,7 +23,7 @@ const  sendEmail = async options => {
     // 2) Define email options
 
     const mailOptions = {
-        from: "Michal Bielawski <michal.bielawski@hotmail.com>",
+        from: "Michal Bielawski <michal.bielawski@sratypierdaty.com>",
         to: options.email,
         subject: options.subject,
         text: options.message,
