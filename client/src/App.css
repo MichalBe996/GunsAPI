@@ -477,8 +477,14 @@ button:active:not(:focus-visible) {
 
 .login--button {
   margin-top: 1.5rem;
+  margin-bottom: 2rem;
   height: 3rem;
   width: 10rem;
   font-size: x-large;
   margin-left: 5rem;
+}
+
+.forgot-password {
+  margin-left: 2.5rem;
+  
 }

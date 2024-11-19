@@ -6,6 +6,7 @@ import Cart from './pages/Cart';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import AboutPage from './pages/AboutPage';
+import ForgotPassword from './pages/ForgotPassword';
 
 
 
@@ -21,6 +22,7 @@ const App = () => {
           <Route path="/login" element={<LoginPage/>}/>
           <Route path="/register" element={<RegisterPage/>}/>
           <Route path="/about" element={<AboutPage/>}/>
+          <Route path="/forgot-your-password" element={<ForgotPassword/>}/>
         
        </Routes>
     </>

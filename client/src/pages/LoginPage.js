@@ -2,7 +2,9 @@ import React from 'react'
 import Navbar from './Navbar';
 import axios from 'axios';
 
+
 const LoginPage = () => {
+
     const [loginData, setLoginData] = React.useState({})
     axios.defaults.withCredentials = true;
     const handleChange = (e) => {
@@ -86,6 +88,7 @@ const LoginPage = () => {
                         </button>
 
                 </form>
+                <a className="forgot-password" href="/forgot-your-password">Forgot your password?</a>
             </div>
 
         </div>
