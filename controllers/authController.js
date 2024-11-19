@@ -1,3 +1,4 @@
+const crypto = require("crypto")
 const { promisify } = require("util")
 const User = require("../models/userModel")
 const jwt = require("jsonwebtoken")
@@ -152,11 +153,10 @@ exports.forgotPassword =  async (req, res, next) =>{
                 message: "Token sent to email!"
             })
         }catch (error) {
-        console.log(error)
-        res.status(500).json({
-            status: "Fail",
-            message: error
-        })
+        user.passwordResetToken = undefined;
+        user.passwordResetExpires = undefined;
+        await user.save({validateBeforeSave: false})
+        return next(new AppError("There was an error sending an email, try again later."), 500)
         
         }}
         
@@ -169,7 +169,46 @@ exports.forgotPassword =  async (req, res, next) =>{
 
 
 
-exports.resetPassword = (req, res, next) => {
+exports.resetPassword = async (req, res, next) => {
+        //1) Get user based on a token
+        const hashedToken = crypto
+        .createHash("sha256")
+        .update(req.params.token)
+        .digest("hex");
+        try{
+            const user = await User.findOne({
+                passwordResetToken: hashedToken, 
+                passwordResetExpires: {$gt: Date.now()}})
+                //2) If token has not expired and user exists, set the new password
+                if(!user){
+                    return next(new AppError("Token is invalid or has expired"), 400)
+                }
+                user.password = req.body.password;
+                user.passwordConfirm = req.body.passwordConfirm;
+                user.passwordResetToken = undefined;
+                user.passwordResetExpires = undefined;
+                await user.save();
+                //4) Log in the user, send JWT
+                const token = signToken(user._id)
+                res.status(200).json({
+                    status: "Success",
+                    token: token
+                })
 
+        }catch(err){
+            console.log(err)
+        }
+        
+
+        
+
+
+
+
+        //3) Update changedPasswordAt for the user
+
+
+        
+        
 }
 
