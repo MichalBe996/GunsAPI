@@ -14,6 +14,18 @@ const signToken = id => {
 }
 
 
+const createAndSendToken = (user, statusCode, res) => {
+    const token = signToken(user._id)
+    res.status(statusCode).json({
+        status: "Success",
+        token,
+        data: {
+            user
+        }
+    })
+}
+
+
 
 
 exports.signup = async (req, res, next) => {
@@ -210,5 +222,24 @@ exports.resetPassword = async (req, res, next) => {
 
         
         
+}
+
+exports.updatePassword = async (req, res, next) => {
+    //1) Get the user from the colleciton
+    // you can't update the password by User.findByIdAndUpdate because the new password wouldn't get encrypted
+    const user = await User.findById(req.user.id).select("+password")
+        
+    //2) Check if the posted password is correct
+    if(!(await user.correctPassword(req.body.passwordConfirm, user.password))){
+        return next(new AppError("Your current password is wrong!"), 401)
+    }
+    //3) If so, update the password
+    user.password = req.body.password;
+    user.passwordConfirm = req.body.passwordConfirm;
+    await user.save()
+
+
+
+    //4) Log the user in, send JWT
 }
 
