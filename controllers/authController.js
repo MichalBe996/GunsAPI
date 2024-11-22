@@ -14,15 +14,24 @@ const signToken = id => {
 }
 
 
-const createAndSendToken = (user, statusCode, res) => {
-    const token = signToken(user._id)
-    res.status(statusCode).json({
+const createAndSendToken = (user, statusCodeSuccess, statusCodeError, res) => {
+    try {
+        const token = signToken(user._id)
+        res.status(statusCodeSuccess).json({
         status: "Success",
         token,
         data: {
             user
         }
     })
+    } catch (error) {
+        res.status(statusCodeError).json({
+            status: "Fail",
+            message: error
+
+        })
+    }
+    
 }
 
 
@@ -36,22 +45,8 @@ exports.signup = async (req, res, next) => {
         passwordConfirm: req.body.passwordConfirm,
         role: req.body.role
     });
-    const token = signToken(newUser._id)
+    createAndSendToken(newUser, 201, 400, res)
 
-    try {
-        res.status(201).json({
-            status: "Success",
-            token,
-            data: {
-                user: newUser
-            }
-        })
-    } catch (err) {
-        res.status(400).json({
-            status: "Failed",
-            message: err
-        })
-    }
     
 }
 
