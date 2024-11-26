@@ -22,7 +22,7 @@ router
 router
     .route("/:id")
     .get(userController.getUser)
-    .patch(authController.protect, userController.updateUser)
+    .patch(authController.protect, userController.updateMe)
     .delete(userController.deleteUser)
 
 

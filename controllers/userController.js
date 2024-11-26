@@ -38,7 +38,15 @@ exports.createUser = (req, res) => {
         message: "This route is not yet implemented"
     })
 }
-exports.updateUser = async (req, res) => {
+exports.updateMe = async (req, res, next) => {
+
+  1// Create error if user POSTs password data
+  if(req.body.password || req.body.passwordConfirm){
+    res.status(400).json({
+      status: "Failed",
+      message: "Bad request, you can't change the password that way! Please use /updateMyPassword"
+    })
+  }
     try {
         const user = await User.findByIdAndUpdate(req.params.id, req.body, {
           //// below parameter returns new document after the update is applied
