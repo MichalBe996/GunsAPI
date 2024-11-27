@@ -3,6 +3,17 @@ const APIFeatures = require("../utils/apiFeatures")
 
 
 
+const filterObj = (obj, ...allowedFields) => {
+  const newObj = {};
+  Object.keys(obj).forEach((el)=>{
+    if(allowedFields.includes(el)) newObj[el] = obj[el]
+      
+    
+    return newObj;
+  })
+}
+
+
 
 
 
@@ -48,16 +59,15 @@ exports.updateMe = async (req, res, next) => {
     })
   }
     try {
-        const user = await User.findByIdAndUpdate(req.params.id, req.body, {
-          //// below parameter returns new document after the update is applied
+        const filteredBody = filterObj(req.body, "name", "email")
+        const updatedUser = User.findByIdAndUpdate(req.user.id, filteredBody, {
           new: true,
-          // runValidators checks e.g. whether parameters are of desired type
           runValidators: true
         })
         res.status(200).json({
           status: "Success", 
           data: {
-            user: user
+            user: updatedUser
           }
         })
       } catch (err) {
