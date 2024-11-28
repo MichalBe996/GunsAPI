@@ -77,9 +77,21 @@ exports.updateMe = async (req, res, next) => {
         })
       }
 }
-exports.deleteUser = (req, res) => {
-    res.status(500).json({
-        status: "Error",
-        message: "This route is not yet implemented"
-    })
+exports.deleteMe = async (req, res, next) => {
+    try {
+      const user = await User.findById(req.user.id)
+      await User.findByIdAndDelete(user.id)
+        
+        res.status(200).json({
+          status: "Success",
+          message: "User deleted successfully!"
+        })
+      
+      
+    } catch (error) {
+      res.status(404).json({
+        status: "Fail",
+        message: error
+      })
+    }
 }
