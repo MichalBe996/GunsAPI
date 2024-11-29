@@ -79,12 +79,14 @@ exports.updateMe = async (req, res, next) => {
 }
 exports.deleteMe = async (req, res, next) => {
     try {
-      const user = await User.findById(req.user.id)
-      await User.findByIdAndDelete(user.id)
+        await User.findByIdAndDelete(req.user.id)
+      
         
         res.status(200).json({
           status: "Success",
-          message: "User deleted successfully!"
+          message: "User deleted successfully!",
+         
+
         })
       
       
