@@ -3,6 +3,7 @@ const morgan = require("morgan")
 const userRouter = require("./routes/userRoutes")
 const gunRouter = require("./routes/gunsRoutes")
 const cors = require('cors')
+const rateLimit = require('express-rate-limit')
 
 
 
@@ -12,8 +13,14 @@ const app = express();
 
 
 
-// 1) MIDDLEWARE 
+// 1) GLOBAL MIDDLEWARES
+
+
+
 console.log(process.env.NODE_ENV)
+
+
+
 if(process.env.NODE_ENV === "development"){
     app.use(morgan("dev"))
 }
@@ -22,8 +29,13 @@ let corsOptions = {
     credentials : true
    }
   
-  
-
+  // limiting the number of requests per one IP in one hour timeframe
+const limiter = rateLimit({
+    max: 100,
+    windowMs: 60 * 60 * 1000,
+    message: "Too many requests from this IP, please try again in an hour."
+})
+app.use("/api", limiter)
 app.use(express.json())
 app.use(cors(corsOptions));
   
