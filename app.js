@@ -4,6 +4,7 @@ const userRouter = require("./routes/userRoutes")
 const gunRouter = require("./routes/gunsRoutes")
 const cors = require('cors')
 const rateLimit = require('express-rate-limit')
+const helmet = require("helmet")
 
 
 
@@ -15,39 +16,42 @@ const app = express();
 
 // 1) GLOBAL MIDDLEWARES
 
-
-
-console.log(process.env.NODE_ENV)
-
-
+// Securing the HTTP headers
+app.use(helmet())
 
 if(process.env.NODE_ENV === "development"){
     app.use(morgan("dev"))
 }
-let corsOptions = {
-    origin: 'http://localhost:3000',
-    credentials : true
-   }
+
   
-  // limiting the number of requests per one IP in one hour timeframe
+// Limiting the number of requests per one IP in one hour timeframe
 const limiter = rateLimit({
     max: 100,
     windowMs: 60 * 60 * 1000,
     message: "Too many requests from this IP, please try again in an hour."
 })
 app.use("/api", limiter)
+
 app.use(express.json())
+
+// Setting up the CORS middleware
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    credentials : true
+   }
 app.use(cors(corsOptions));
-  
-  app.use(function (req, res, next) {	
-      res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');    
-      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');    
-      res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');   
-      res.setHeader('Access-Control-Allow-Credentials', true);    
-      next();
+
+
+// Allowing cross origin
+app.use(function (req, res, next) {	
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');    
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');    
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');   
+    res.setHeader('Access-Control-Allow-Credentials', true);    
+    next();
   });
 
-
+// Test middleware
 app.use((req, res, next)=>{
     req.requestTime = new Date().toISOString();
     
@@ -57,22 +61,6 @@ app.use((req, res, next)=>{
     console.log("This is test middleware")
     next();
 })
-
-
-
-// 2) ROUTE HANDLER
-
-
-
-
-// app.get("/api/v1/guns", getAllGuns)
-// app.get("/api/v1/guns/:id", getSingleGun) 
-// app.post("/api/v1/guns", createNewGun)
-// app.patch("/api/v1/guns/:id", updateGun)
-// app.delete("/api/v1/guns/:id", deleteGun)
-
-// 3) ROUTES
-
 
 
 app.use("/api/v1/guns", gunRouter);
