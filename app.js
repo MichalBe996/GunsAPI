@@ -6,13 +6,7 @@ const cors = require('cors')
 const rateLimit = require('express-rate-limit')
 const helmet = require("helmet")
 
-
-
-
 const app = express();
-
-
-
 
 // 1) GLOBAL MIDDLEWARES
 
@@ -40,7 +34,6 @@ const corsOptions = {
     credentials : true
    }
 app.use(cors(corsOptions));
-
 
 // Allowing cross origin
 app.use(function (req, res, next) {	
