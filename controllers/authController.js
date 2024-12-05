@@ -13,8 +13,6 @@ const signToken = id => {
     })
 }
 
-
-
 const createAndSendToken = (user, statusCodeSuccess, statusCodeError, res) => {
     const cookieOptions = {
         expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000),
@@ -44,9 +42,6 @@ const createAndSendToken = (user, statusCodeSuccess, statusCodeError, res) => {
     }
     
 }
-
-
-
 
 exports.signup = async (req, res, next) => {
     const newUser = await User.create({
@@ -180,13 +175,6 @@ exports.forgotPassword =  async (req, res, next) =>{
         
         
      
-    
-    
-
-
-
-
-
 exports.resetPassword = async (req, res, next) => {
         //1) Get user based on a token
         const hashedToken = crypto
@@ -218,16 +206,6 @@ exports.resetPassword = async (req, res, next) => {
         }
         
 
-        
-
-
-
-
-        //3) Update changedPasswordAt for the user
-
-
-        
-        
 }
 
 exports.updatePassword = async (req, res, next) => {

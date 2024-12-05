@@ -3,8 +3,11 @@ const morgan = require("morgan")
 const userRouter = require("./routes/userRoutes")
 const gunRouter = require("./routes/gunsRoutes")
 const cors = require('cors')
+const mongoSanitize = require("express-mongo-sanitize")
+const xss = require("xss-clean")
 const rateLimit = require('express-rate-limit')
 const helmet = require("helmet")
+
 
 const app = express();
 
@@ -27,6 +30,15 @@ const limiter = rateLimit({
 app.use("/api", limiter)
 
 app.use(express.json())
+
+// Data sanitization against NoSQL query injection
+
+app.use(mongoSanitize()); // prevents using queries as an input
+
+
+// Data sanitization against XSS attacks
+
+app.use(xss()); // cleans malicious html code from the input 
 
 // Setting up the CORS middleware
 const corsOptions = {
