@@ -7,6 +7,7 @@ const mongoSanitize = require("express-mongo-sanitize")
 const xss = require("xss-clean")
 const rateLimit = require('express-rate-limit')
 const helmet = require("helmet")
+const hpp = require("hpp")
 
 
 const app = express();
@@ -39,6 +40,11 @@ app.use(mongoSanitize()); // prevents using queries as an input
 // Data sanitization against XSS attacks
 
 app.use(xss()); // cleans malicious html code from the input 
+
+// Prevent parameter pollution
+app.use(hpp({
+    whitelist: ["type"]
+}))
 
 // Setting up the CORS middleware
 const corsOptions = {
