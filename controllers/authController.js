@@ -78,11 +78,7 @@ exports.login =  async (req, res, next) => {
     }
 
     // 3) If everything ok, send token to client
-    const token = signToken(user._id)
-        res.status(200).json({
-            status: "success",
-            token
-        })
+    createAndSendToken(user, 201, 400, res)
     
     
      
@@ -195,11 +191,7 @@ exports.resetPassword = async (req, res, next) => {
                 user.passwordResetExpires = undefined;
                 await user.save();
                 //4) Log in the user, send JWT
-                const token = signToken(user._id)
-                res.status(200).json({
-                    status: "Success",
-                    token: token
-                })
+                createAndSendToken(user, 201, 400, res)
 
         }catch(err){
             console.log(err)
