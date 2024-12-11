@@ -35,7 +35,7 @@ const LoginPage = () => {
         )
         .then((res)=>{
             console.log("Server response: ", res)
-            alert("User have been logged in successfully!")
+            alert(`Welcome back ${res.data.data.user.name}`)
         })
         .catch((err)=>{
             console.log("Server error: ", err)
