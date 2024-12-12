@@ -40,7 +40,7 @@ const LoginPage = () => {
         .catch((err)=>{
             console.log("Server error: ", err)
         })
-
+        
     }
     
 

@@ -2,9 +2,22 @@ import React from 'react'
 import { Outlet, Link, useNavigate } from "react-router-dom";
 import target from "../target.png"
 import Cookies from "js-cookie"
+import {jwtDecode} from "jwt-decode"
 
 
 const Navbar = () => {
+    
+    const [token, setToken] = React.useState("")
+    React.useEffect(()=> {
+      if(Cookies.get("jwt")){
+        setToken(jwtDecode(Cookies.get("jwt")))
+      }
+    }, [])
+    
+    
+  
+    
+
   const navigate = useNavigate();
   const homeRedirect = () => {
     navigate("/");
@@ -21,9 +34,12 @@ const Navbar = () => {
   const aboutRedirect = () => {
     navigate("/about")
   }
-  const getJWTCookie = () => {
-    console.log(Cookies.get("jwt"))
+  const logoutUser = () => {
+    Cookies.remove("jwt")
+    setToken("")
+    window.location.reload()
   }
+  
   
   
   
@@ -38,11 +54,16 @@ const Navbar = () => {
             
         </div>
         <div className="buttons--navbar">
-            <button onClick={getJWTCookie}>Show cookies</button>
+            
             <button onClick={homeRedirect}>Home</button>
             <button onClick={cartRedirect}>Cart</button>
-            <button onClick={registerRedirect}>Register</button>
-            <button onClick={loginRedirect}>Login</button>
+            {(token ==="") && <button onClick={registerRedirect}>Register</button>
+            }
+            {(token ==="") && <button onClick={loginRedirect}>Login</button>
+            }
+            {(token !== "") && <button onClick={(logoutUser)}>Logout</button>}
+            
+            
             <button onClick={aboutRedirect}>About</button>
         </div>
     
