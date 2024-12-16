@@ -34,6 +34,9 @@ const Navbar = () => {
   const aboutRedirect = () => {
     navigate("/about")
   }
+  const myAccountRedirect = () => {
+    navigate("/myAccount");
+  }
   const logoutUser = () => {
     Cookies.remove("jwt")
     setToken("")
@@ -61,6 +64,7 @@ const Navbar = () => {
             }
             {(token ==="") && <button onClick={loginRedirect}>Login</button>
             }
+            {(token !== "") && <button onClick={(myAccountRedirect)}>My Account</button>}
             {(token !== "") && <button onClick={(logoutUser)}>Logout</button>}
             
             
