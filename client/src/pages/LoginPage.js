@@ -1,10 +1,14 @@
 import React from 'react'
 import Navbar from './Navbar';
 import axios from 'axios';
+import Cookies from "js-cookie"
+import { jwtDecode } from 'jwt-decode';
+import {useNavigate} from "react-router-dom"
 
 
 const LoginPage = () => {
-
+    const navigate = useNavigate()
+    
     const [loginData, setLoginData] = React.useState({})
     axios.defaults.withCredentials = true;
     const handleChange = (e) => {
@@ -35,7 +39,7 @@ const LoginPage = () => {
         )
         .then((res)=>{
             console.log("Server response: ", res)
-            alert(`Welcome back ${res.data.data.user.name}`)
+            navigate("/")
         })
         .catch((err)=>{
             console.log("Server error: ", err)

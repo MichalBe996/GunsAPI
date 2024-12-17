@@ -1,6 +1,8 @@
 import React from 'react'
 import Navbar from './Navbar'
 import {useState, useEffect} from "react"
+import Cookies from "js-cookie"
+import { jwtDecode } from 'jwt-decode'
 import axios from "axios"
 import GunCard from './GunCard'
 
@@ -11,25 +13,36 @@ const Home = () => {
     type: ""
   })
   const [cartItems, setCartItems] = React.useState([])
+  const [token, setToken] = React.useState("")
+  React.useEffect(()=> {
+        if(Cookies.get("jwt")){
+          setToken(jwtDecode(Cookies.get("jwt")))
+          console.log(token)
+        }
+      }, [])
 
 
 
   function addToCart(props){
     ////// WORKING 
-   if(JSON.parse(localStorage.getItem(props.id))===null){
-    let cartItem = {
-      id: props.id,
-      name: props.name,
-      img: props.img,
-      price: props.price,
-      amount: 1
-     }
-     localStorage.setItem(props.id, JSON.stringify(cartItem))
-   }else {
-    let cartItem = JSON.parse(localStorage.getItem(props.id))
-    cartItem.amount += 1
-    localStorage.setItem(props.id, JSON.stringify(cartItem))
-   }
+    if(token===""){
+      if(JSON.parse(localStorage.getItem(props.id))===null){
+        let cartItem = {
+          id: props.id,
+          name: props.name,
+          img: props.img,
+          price: props.price,
+          amount: 1
+         }
+         localStorage.setItem(props.id, JSON.stringify(cartItem))
+       }else {
+        let cartItem = JSON.parse(localStorage.getItem(props.id))
+        cartItem.amount += 1
+        localStorage.setItem(props.id, JSON.stringify(cartItem))
+       }
+    }
+    
+   
 
 
  
