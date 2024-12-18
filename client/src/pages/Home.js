@@ -40,6 +40,13 @@ const Home = () => {
         cartItem.amount += 1
         localStorage.setItem(props.id, JSON.stringify(cartItem))
        }
+    }else {
+      axios.patch("http://localhost:5000/api/v1/users/updateMe", {
+        cartArray: "test",
+        
+      })
+        .then(response => console.log(response.data))
+        .catch(error => console.error(error));
     }
     
    
