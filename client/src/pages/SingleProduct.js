@@ -7,6 +7,7 @@ import axios from 'axios'
 
 
 const SingleProduct = () => {
+  
     const navigate = useNavigate();
     const redirectBack = () => {
       navigate("/");

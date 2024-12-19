@@ -44,6 +44,10 @@ const Home = () => {
       axios.patch("http://localhost:5000/api/v1/users/updateMe", {
         cartArray: "test",
         
+      },{
+        headers: {
+          "Authorization": "Bearer " + token
+        }
       })
         .then(response => console.log(response.data))
         .catch(error => console.error(error));
