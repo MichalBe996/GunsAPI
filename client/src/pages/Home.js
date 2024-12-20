@@ -13,18 +13,10 @@ const Home = () => {
     type: ""
   })
   const [cartItems, setCartItems] = React.useState([])
+  const [userCart, setUserCart] = React.useState([])
   const [token, setToken] = React.useState("")
-  React.useEffect(()=> {
-        if(Cookies.get("jwt")){
-          setToken(jwtDecode(Cookies.get("jwt")))
-          console.log(token)
-        }
-      }, [])
 
-
-
-  function addToCart(props){
-    ////// WORKING 
+function addToCart(props){
     if(token===""){
       if(JSON.parse(localStorage.getItem(props.id))===null){
         let cartItem = {
@@ -52,23 +44,7 @@ const Home = () => {
         .then(response => console.log(response.data))
         .catch(error => console.error(error));
     }
-    
-   
-
-
- 
-   
-
-
- 
-
-   
-   
-
-
-    
-    
-  }
+}
   
 
   const handleChange = (e) => {
@@ -96,6 +72,14 @@ const Home = () => {
     
   
   useEffect(()=> {
+    if(Cookies.get("jwt")){
+          
+      setToken(jwtDecode(Cookies.get("jwt")))
+      axios
+      .get(`http://localhost:5000/api/v1/users/${token.id}`)
+      .then(res=> console.log(res))
+      .catch(err => console.log(err))
+    }
     axios
     .get("http://localhost:5000/api/v1/guns?limit=10")
     .then((res)=>setData(res.data.data.allGuns))

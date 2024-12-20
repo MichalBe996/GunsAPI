@@ -37,11 +37,21 @@ exports.getAllUsers = async (req, res) => {
       })
     }
 }
-exports.getUser = (req, res) => {
-    res.status(500).json({
-        status: "Error",
-        message: "This route is not yet implemented"
+exports.getUser = async(req, res) => {
+  try {
+    const singleUser = await User.findById(req.params.id)
+    res.status(200).json({
+      status: "success",
+      data: {
+        singleUser
+      }
     })
+  } catch (err) {
+    res.status(400).json({
+      status: "Fail",
+      message: err
+    })
+  }
 }
 exports.createUser = (req, res) => {
     res.status(500).json({
