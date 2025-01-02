@@ -38,7 +38,9 @@ function addToCart(props){
         
       },{
         headers: {
-          "Authorization": "Bearer " + token
+          "Authorization": "Bearer " + token,
+          "Content-Type": "application/json",
+                    
         }
       })
         .then(response => console.log(response.data))
