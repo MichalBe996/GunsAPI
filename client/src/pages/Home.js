@@ -33,6 +33,7 @@ function addToCart(props){
         localStorage.setItem(props.id, JSON.stringify(cartItem))
        }
     }else {
+      /// refactor code below, does not work correctly
       axios.patch("http://localhost:5000/api/v1/users/updateMe", {
         cartArray: "test",
         

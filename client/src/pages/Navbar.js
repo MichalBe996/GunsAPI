@@ -6,7 +6,7 @@ import {jwtDecode} from "jwt-decode"
 
 
 const Navbar = () => {
-    
+    /// refactor section below as while rendering user can see text switch between logged in user and not logged in
     const [token, setToken] = React.useState("")
     React.useEffect(()=> {
       if(Cookies.get("jwt")){
@@ -35,7 +35,7 @@ const Navbar = () => {
     navigate("/about")
   }
   const myAccountRedirect = () => {
-    navigate("/myAccount");
+    navigate("/my-account");
   }
   const logoutUser = () => {
     Cookies.remove("jwt")
