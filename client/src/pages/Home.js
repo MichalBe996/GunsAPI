@@ -39,8 +39,8 @@ function addToCart(props){
         
       },{
         headers: {
-          "Authorization": "Bearer " + token,
-          "Content-Type": "application/json",
+          "Authorization":  "Bearer " + token,
+          
                     
         }
       })
@@ -78,10 +78,7 @@ function addToCart(props){
     if(Cookies.get("jwt")){
           
       setToken(jwtDecode(Cookies.get("jwt")))
-      axios
-      .get(`http://localhost:5000/api/v1/users/${token.id}`)
-      .then(res=> console.log(res))
-      .catch(err => console.log(err))
+      
     }
     axios
     .get("http://localhost:5000/api/v1/guns?limit=10")
