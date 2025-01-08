@@ -15,6 +15,22 @@ const Home = () => {
   const [cartItems, setCartItems] = React.useState([])
   const [userCart, setUserCart] = React.useState([])
   const [token, setToken] = React.useState("")
+  useEffect(()=> {
+    if(Cookies.get("jwt")){
+          
+      setToken(jwtDecode(Cookies.get("jwt")))
+      
+    }
+    axios
+    .get("http://localhost:5000/api/v1/guns?limit=10")
+    .then((res)=>setData(res.data.data.allGuns))
+    .catch(err=>{
+      setError(err.message)
+    })
+  
+
+
+  }, [])
 
 function addToCart(props){
     if(token===""){
@@ -74,22 +90,7 @@ function addToCart(props){
   }
     
   
-  useEffect(()=> {
-    if(Cookies.get("jwt")){
-          
-      setToken(jwtDecode(Cookies.get("jwt")))
-      
-    }
-    axios
-    .get("http://localhost:5000/api/v1/guns?limit=10")
-    .then((res)=>setData(res.data.data.allGuns))
-    .catch(err=>{
-      setError(err.message)
-    })
   
-
-
-  }, [])
   
 
   const mappedCards = data.map((element)=>{

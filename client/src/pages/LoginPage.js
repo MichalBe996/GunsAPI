@@ -7,6 +7,7 @@ import {useNavigate} from "react-router-dom"
 
 
 const LoginPage = () => {
+    
     const navigate = useNavigate()
     
     const [loginData, setLoginData] = React.useState({})
@@ -38,6 +39,7 @@ const LoginPage = () => {
             }
         )
         .then((res)=>{
+        
             console.log("Server response: ", res)
             navigate("/")
         })
