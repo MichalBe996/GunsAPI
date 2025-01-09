@@ -18,7 +18,7 @@ const Home = () => {
   useEffect(()=> {
     if(Cookies.get("jwt")){
           
-      setToken(jwtDecode(Cookies.get("jwt")))
+      setToken(Cookies.get("jwt"))
       
     }
     axios
@@ -50,12 +50,13 @@ function addToCart(props){
        }
     }else {
       /// refactor code below, does not work correctly
+      
       axios.patch("http://localhost:5000/api/v1/users/updateMe", {
-        cartArray: "test",
+        cartArray: "testGunAddedFromclientSideNowCompletelyWorking",
         
       },{
         headers: {
-          "Authorization":  "Bearer " + token,
+          "Authorization":  `Bearer ${token}`
           
                     
         }
