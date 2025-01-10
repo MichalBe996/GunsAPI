@@ -13,16 +13,23 @@ const Home = () => {
     type: ""
   })
   const [cartItems, setCartItems] = React.useState([])
+  const [loggedUserCart, setLoggedUserCart] = React.useState([])
   const [userCart, setUserCart] = React.useState([])
   const [token, setToken] = React.useState("")
   useEffect(()=> {
     if(Cookies.get("jwt")){
           
       setToken(Cookies.get("jwt"))
+      let userId = jwtDecode(token).id
+      console.log(userId)
+      axios.get(`http://localhost:5000/api/v1/users/${userId}`)
+      .then(res=>console.log(res))
+      .catch(err => console.log(err))
+
+    
       
     }
-    axios
-    .get("http://localhost:5000/api/v1/guns?limit=10")
+    axios.get("http://localhost:5000/api/v1/guns?limit=10")
     .then((res)=>setData(res.data.data.allGuns))
     .catch(err=>{
       setError(err.message)
@@ -49,7 +56,7 @@ function addToCart(props){
         localStorage.setItem(props.id, JSON.stringify(cartItem))
        }
     }else {
-      /// refactor code below, does not work correctly
+      
       
       axios.patch("http://localhost:5000/api/v1/users/updateMe", {
         cartArray: "testGunAddedFromclientSideNowCompletelyWorking",
