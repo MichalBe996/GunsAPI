@@ -3,6 +3,7 @@ import Navbar from './Navbar'
 import {useState, useEffect} from "react"
 import Cookies from "js-cookie"
 import { jwtDecode } from 'jwt-decode'
+import "core-js/stable/atob";
 import axios from "axios"
 import GunCard from './GunCard'
 
@@ -18,13 +19,20 @@ const Home = () => {
   const [token, setToken] = React.useState("")
   useEffect(()=> {
     if(Cookies.get("jwt")){
-          
       setToken(Cookies.get("jwt"))
-      let userId = jwtDecode(token).id
-      console.log(userId)
-      axios.get(`http://localhost:5000/api/v1/users/${userId}`)
-      .then(res=>console.log(res))
-      .catch(err => console.log(err))
+
+
+      // code below to fix
+    //   let decodedToken = jwtDecode(token)
+    //   axios.get(`http://localhost:5000/api/v1/users/${decodedToken.id}`)
+    // .then((res)=>console.log(res.data.data.cartArray))
+    // .catch(err=>{
+    //   console.log(err)
+    // })
+     
+
+      
+     
 
     
       
