@@ -20,6 +20,7 @@ const Home = () => {
   useEffect(()=> {
     if(Cookies.get("jwt")){
       setToken(Cookies.get("jwt"))
+      console.log(token)
 
 
       // code below to fix
