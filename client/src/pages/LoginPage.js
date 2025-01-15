@@ -42,6 +42,7 @@ const LoginPage = () => {
         
             console.log("Server response: ", res)
         
+        
             navigate("/")
         })
         .catch((err)=>{

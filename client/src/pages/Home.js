@@ -17,20 +17,20 @@ const Home = () => {
   const [loggedUserCart, setLoggedUserCart] = React.useState([])
   const [userCart, setUserCart] = React.useState([])
   const [token, setToken] = React.useState("")
+  
   useEffect(()=> {
     if(Cookies.get("jwt")){
-      setToken(Cookies.get("jwt"))
-      console.log(token)
+      console.log(jwtDecode(Cookies.get("jwt")).id)
+      axios.get(`http://localhost:5000/api/v1/users/${jwtDecode(Cookies.get("jwt")).id}`)
+    .then((res)=>{console.log(res.data.data.singleUser.cartArray)
+      setLoggedUserCart(prevState=> [...prevState, res.data.data.singleUser.cartArray])
+      console.log("LOGGED USER CART:", loggedUserCart)
+    })
+    .catch(err=>{
+      console.log(err)})
 
 
-      // code below to fix
-    //   let decodedToken = jwtDecode(token)
-    //   axios.get(`http://localhost:5000/api/v1/users/${decodedToken.id}`)
-    // .then((res)=>console.log(res.data.data.cartArray))
-    // .catch(err=>{
-    //   console.log(err)
-    // })
-     
+      
 
       
      
