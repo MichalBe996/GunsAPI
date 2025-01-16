@@ -20,24 +20,16 @@ const Home = () => {
   
   useEffect(()=> {
     if(Cookies.get("jwt")){
+      setToken(Cookies.get("jwt"))
       console.log(jwtDecode(Cookies.get("jwt")).id)
       axios.get(`http://localhost:5000/api/v1/users/${jwtDecode(Cookies.get("jwt")).id}`)
-    .then((res)=>{console.log(res.data.data.singleUser.cartArray)
-      setLoggedUserCart(prevState=> [...prevState, res.data.data.singleUser.cartArray])
-      console.log("LOGGED USER CART:", loggedUserCart)
+    .then((res)=>{
+      console.log(res.data.data.singleUser.cartArray)
     })
     .catch(err=>{
       console.log(err)})
 
-
-      
-
-      
-     
-
-    
-      
-    }
+ }
     axios.get("http://localhost:5000/api/v1/guns?limit=10")
     .then((res)=>setData(res.data.data.allGuns))
     .catch(err=>{
@@ -65,10 +57,17 @@ function addToCart(props){
         localStorage.setItem(props.id, JSON.stringify(cartItem))
        }
     }else {
-      
+      let cartItem = {
+        id: props.id,
+        name: props.name,
+        img: props.img,
+        price: props.price,
+        amount: 1
+       }
+       setLoggedUserCart([...loggedUserCart, cartItem])
       
       axios.patch("http://localhost:5000/api/v1/users/updateMe", {
-        cartArray: "testGunAddedFromclientSideNowCompletelyWorking",
+        cartArray: loggedUserCart,
         
       },{
         headers: {
@@ -105,12 +104,7 @@ function addToCart(props){
       setError(err.message)
     })
   }
-    
-  
-  
-  
-
-  const mappedCards = data.map((element)=>{
+    const mappedCards = data.map((element)=>{
     return <GunCard 
             key={element._id}
             name={element.name}
@@ -121,10 +115,7 @@ function addToCart(props){
             addToCart={addToCart}
     />
   })
-
-
-
-  return (
+return (
 
     <div>
         <Navbar/>
