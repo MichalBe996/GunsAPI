@@ -25,6 +25,7 @@ const Home = () => {
       axios.get(`http://localhost:5000/api/v1/users/${jwtDecode(Cookies.get("jwt")).id}`)
     .then((res)=>{
       console.log(res.data.data.singleUser.cartArray)
+      setLoggedUserCart([...loggedUserCart, res.data.data.singleUser.cartArray])
     })
     .catch(err=>{
       console.log(err)})
@@ -41,6 +42,7 @@ const Home = () => {
   }, [])
 
 function addToCart(props){
+  /// for user not logged in
     if(token===""){
       if(JSON.parse(localStorage.getItem(props.id))===null){
         let cartItem = {
@@ -57,14 +59,15 @@ function addToCart(props){
         localStorage.setItem(props.id, JSON.stringify(cartItem))
        }
     }else {
-      let cartItem = {
-        id: props.id,
-        name: props.name,
-        img: props.img,
-        price: props.price,
-        amount: 1
-       }
-       setLoggedUserCart([...loggedUserCart, cartItem])
+      /// for logged user
+      for(let i=0; i<loggedUserCart.length; i++){
+        if(loggedUserCart[i].id === props.id){
+          loggedUserCart[i] = {...loggedUserCart[i], amount: loggedUserCart[i].amount + 1}
+          setLoggedUserCart([...loggedUserCart, loggedUserCart[i]])
+          return loggedUserCart
+        }
+      }
+      
       
       axios.patch("http://localhost:5000/api/v1/users/updateMe", {
         cartArray: loggedUserCart,
