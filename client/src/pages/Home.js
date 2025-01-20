@@ -20,6 +20,7 @@ const Home = () => {
   
   useEffect(()=> {
     if(Cookies.get("jwt")){
+      localStorage.clear()
       setToken(Cookies.get("jwt"))
       console.log(jwtDecode(Cookies.get("jwt")).id)
       axios.get(`http://localhost:5000/api/v1/users/${jwtDecode(Cookies.get("jwt")).id}`)
@@ -60,13 +61,22 @@ function addToCart(props){
        }
     }else {
       /// for logged user
-      for(let i=0; i<loggedUserCart.length; i++){
-        if(loggedUserCart[i].id === props.id){
-          loggedUserCart[i] = {...loggedUserCart[i], amount: loggedUserCart[i].amount + 1}
-          setLoggedUserCart([...loggedUserCart, loggedUserCart[i]])
-          return loggedUserCart
-        }
-      }
+      if(JSON.parse(localStorage.getItem(props.id))===null){
+        let cartItem = {
+          id: props.id,
+          name: props.name,
+          img: props.img,
+          price: props.price,
+          amount: 1
+         }
+         console.log(localStorage)
+         localStorage.setItem(props.id, JSON.stringify(cartItem))
+       }else {
+        let cartItem = JSON.parse(localStorage.getItem(props.id))
+        cartItem.amount += 1
+        localStorage.setItem(props.id, JSON.stringify(cartItem))
+        console.log(localStorage)
+       }
       
       
       axios.patch("http://localhost:5000/api/v1/users/updateMe", {
