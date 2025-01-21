@@ -75,8 +75,10 @@ function addToCart(props){
         let cartItem = JSON.parse(localStorage.getItem(props.id))
         cartItem.amount += 1
         localStorage.setItem(props.id, JSON.stringify(cartItem))
-        console.log(localStorage)
+        
        }
+      setLoggedUserCart()
+      
       
       
       axios.patch("http://localhost:5000/api/v1/users/updateMe", {
