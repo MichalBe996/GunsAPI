@@ -26,7 +26,8 @@ const Home = () => {
       axios.get(`http://localhost:5000/api/v1/users/${jwtDecode(Cookies.get("jwt")).id}`)
     .then((res)=>{
       console.log(res.data.data.singleUser.cartArray)
-      setLoggedUserCart([...loggedUserCart, res.data.data.singleUser.cartArray])
+      setLoggedUserCart(res.data.data.singleUser.cartArray)
+      console.log("USER CART:", loggedUserCart)
     })
     .catch(err=>{
       console.log(err)})
@@ -69,15 +70,15 @@ function addToCart(props){
           price: props.price,
           amount: 1
          }
-         console.log(localStorage)
          localStorage.setItem(props.id, JSON.stringify(cartItem))
+         setLoggedUserCart([localStorage])
        }else {
         let cartItem = JSON.parse(localStorage.getItem(props.id))
         cartItem.amount += 1
         localStorage.setItem(props.id, JSON.stringify(cartItem))
-        
+        setLoggedUserCart(prevState=>[localStorage])
        }
-      setLoggedUserCart()
+      
       
       
       
