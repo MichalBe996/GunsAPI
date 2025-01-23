@@ -26,7 +26,7 @@ const Home = () => {
       axios.get(`http://localhost:5000/api/v1/users/${jwtDecode(Cookies.get("jwt")).id}`)
     .then((res)=>{
       console.log(res.data.data.singleUser.cartArray)
-      setLoggedUserCart(res.data.data.singleUser.cartArray)
+      setLoggedUserCart(prevState => res.data.data.singleUser.cartArray)
       console.log("USER CART:", loggedUserCart)
     })
     .catch(err=>{
@@ -62,24 +62,21 @@ function addToCart(props){
        }
     }else {
       /// for logged user
-      if(JSON.parse(localStorage.getItem(props.id))===null){
-        let cartItem = {
-          id: props.id,
-          name: props.name,
-          img: props.img,
-          price: props.price,
-          amount: 1
-         }
-         localStorage.setItem(props.id, JSON.stringify(cartItem))
-         setLoggedUserCart([localStorage])
-       }else {
-        let cartItem = JSON.parse(localStorage.getItem(props.id))
-        cartItem.amount += 1
-        localStorage.setItem(props.id, JSON.stringify(cartItem))
-        setLoggedUserCart(prevState=>[localStorage])
-       }
-      
-      
+
+
+
+
+      ////// TO BE REFACTORED
+      if(!loggedUserCart.includes({id: props.id, name:props.nam, price: props.price, amount: 1})){
+        setLoggedUserCart(prevState=> [...prevState, {id: props.id, name:props.nam, price: props.price, amount: 1}])
+      }else{
+        setLoggedUserCart(prevState=>[
+          ...prevState, {
+            ...prevState,
+            amount: prevState.prevState.amount + 1
+          }
+        ])
+      }
       
       
       axios.patch("http://localhost:5000/api/v1/users/updateMe", {
