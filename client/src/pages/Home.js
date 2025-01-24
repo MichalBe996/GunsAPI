@@ -67,20 +67,30 @@ function addToCart(props){
 
 
       ////// TO BE REFACTORED
-      if(!loggedUserCart.includes({id: props.id, name:props.nam, price: props.price, amount: 1})){
-        setLoggedUserCart(prevState=> [...prevState, {id: props.id, name:props.nam, price: props.price, amount: 1}])
-      }else{
-        setLoggedUserCart(prevState=>[
-          ...prevState, {
-            ...prevState,
-            amount: prevState.prevState.amount + 1
-          }
-        ])
-      }
+      loggedUserCart.forEach(element=>{
+        if(element.id === props.id){
+  
+          setLoggedUserCart(prevState=> [
+            ...prevState, {...element, amount: element.amount+1}
+          ])
+          console.log(loggedUserCart)
+          return loggedUserCart
+          
+        }
+      })
+      setLoggedUserCart(prevState => [
+      ...prevState, {id: props.id,
+        name: props.name,
+        img: props.img,
+        price: props.price,
+        amount: 1}
+
+      ])
+      console.log(loggedUserCart)
       
       
       axios.patch("http://localhost:5000/api/v1/users/updateMe", {
-        cartArray: loggedUserCart,
+        cartArray: [],
         
       },{
         headers: {
