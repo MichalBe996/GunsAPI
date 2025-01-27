@@ -6,6 +6,7 @@ import { jwtDecode } from 'jwt-decode'
 import "core-js/stable/atob";
 import axios from "axios"
 import GunCard from './GunCard'
+import Footer from './Footer'
 
 const Home = () => {
   const [data, setData] = useState([])
@@ -222,7 +223,9 @@ return (
         </div>
         
 
+    <Footer/>
     </div>
+    
   )
 }
 

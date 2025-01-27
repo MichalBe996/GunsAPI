@@ -4,6 +4,7 @@ import axios from 'axios';
 import Cookies from "js-cookie"
 import { jwtDecode } from 'jwt-decode';
 import {useNavigate} from "react-router-dom"
+import Footer from './Footer';
 
 
 const LoginPage = () => {
@@ -100,6 +101,7 @@ const LoginPage = () => {
             </div>
 
         </div>
+        <Footer/>
     </div>
   )
 }

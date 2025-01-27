@@ -1,6 +1,7 @@
 import React from 'react'
 import Navbar from './Navbar'
 import axios from 'axios'
+import Footer from './Footer'
 
 const RegisterPage = () => {
     const [registerData, setRegisterData] = React.useState({role: "user"})
@@ -113,6 +114,7 @@ const RegisterPage = () => {
             </form>
             <button className="register-submit-button" type="submit">Create account</button>
         </div>
+        <Footer/>
     </div>
   )
 }

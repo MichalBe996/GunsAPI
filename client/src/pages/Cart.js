@@ -1,6 +1,7 @@
 import React from 'react'
 import Navbar from './Navbar'
 import CartItem from './CartItem'
+import Footer from './Footer'
 
 
 const Cart = () => {
@@ -148,6 +149,7 @@ const Cart = () => {
             </div>
 
         </div>
+        <Footer/>
     </div>
   )
 }
