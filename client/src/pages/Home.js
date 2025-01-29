@@ -63,18 +63,27 @@ function addToCart(props){
        }
     }else {
       /// for logged user
-      let gunItem = {id: props.id,
-        name: props.name,
-        img: props.img,
-        price: props.price,
-        amount: 1}
-      let newLoggedCart = loggedUserCart;
-      if(loggedUserCart.includes(gunItem)){
-  
-        setLoggedUserCart(prevState=> [...prevState, {...gunItem, amount: gunItem.amount + 1}])
-      }else {
-        setLoggedUserCart(prevState => [...prevState, gunItem])
+      
+      let foundCounter = 0;
+      let newUserCart = loggedUserCart;
+      newUserCart.forEach(element=>{
+        if(element.id === props.id){
+          element.amount += 1;
+          foundCounter += 1;
+          setLoggedUserCart(prevState => newUserCart)
+
+        }
+        
+      })
+      if(foundCounter===0){
+        setLoggedUserCart(prevState => [...prevState, {
+          id: props.id,
+          name: props.name,
+          img: props.img,
+          price: props.price,
+          amount: 1}])
       }
+
 
     
       
