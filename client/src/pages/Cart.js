@@ -2,6 +2,9 @@ import React from 'react'
 import Navbar from './Navbar'
 import CartItem from './CartItem'
 import Footer from './Footer'
+import Cookies from "js-cookie"
+import { jwtDecode } from 'jwt-decode'
+import axios from 'axios'
 
 
 const Cart = () => {
@@ -14,23 +17,35 @@ const Cart = () => {
   console.log("KEYS FROM STORAGE: ", storageKeys)
   
   React.useEffect(()=>{
-    let newCart = []
-    if(storageKeys.length > 0){
-      storageKeys.forEach(element=>{
-        let cartItem = JSON.parse(localStorage.getItem(element))
-        newCart.push(cartItem)
-        setTotalPrice(prevState => prevState + cartItem.amount * cartItem.price)
-      })
-  
-      setCart(newCart)
-      cart.forEach(element=>{
-        if(element.amount===0){
-          localStorage.removeItem(element.id)
-          let newCart = cart.filter(function(element){return element.amount !== 0})
-          setCart(newCart)
-        }
-      })
+    // FOR UNLOGGED USER
+    if(!Cookies.get("jtw")){
+      let newCart = []
+      if(storageKeys.length > 0){
+        storageKeys.forEach(element=>{
+          let cartItem = JSON.parse(localStorage.getItem(element))
+          newCart.push(cartItem)
+          setTotalPrice(prevState => prevState + cartItem.amount * cartItem.price)
+        })
+    
+        setCart(newCart)
+        cart.forEach(element=>{
+          if(element.amount===0){
+            localStorage.removeItem(element.id)
+            let newCart = cart.filter(function(element){return element.amount !== 0})
+            setCart(newCart)
+          }
+        })
+      }
     }
+    // FOR LOGGED USER
+    else{
+      axios.get(`http://localhost:5000/api/v1/users/${jwtDecode(Cookies.get("jwt")).id}`)
+      .then((res)=>{
+        console.log(res.data.data.singleUser.cartArray)
+        setCart(prevState => res.data.data.singleUser.cartArray)
+        
+      })}
+    
     
   },[])
   
@@ -40,28 +55,34 @@ const Cart = () => {
 
   
   const incrementAmount = (cartItem, setCartItem, id) => {
-    let newCartItem = {
-      ...cartItem,
-      amount: cartItem.amount + 1
-    }
-    setCartItem(newCartItem)
-    console.log(newCartItem)
-    let cartArray = cart;
-    for(let i=0; i < cartArray.length; i++){
-      if(cartArray[i].id === id){
-        cartArray[i] = newCartItem;
+    /// FOR UNLOGGED USER
+    if(!Cookies.get("jwt")){
+      let newCartItem = {
+        ...cartItem,
+        amount: cartItem.amount + 1
       }
+      setCartItem(newCartItem)
+      console.log(newCartItem)
+      let cartArray = cart;
+      for(let i=0; i < cartArray.length; i++){
+        if(cartArray[i].id === id){
+          cartArray[i] = newCartItem;
+        }
+      }
+      setCart(cartArray)
+      console.log("NEW CART", cart)
+      localStorage.setItem(id, JSON.stringify(newCartItem))
+      setTotalPrice(prevState => prevState + cartItem.price)
     }
-    setCart(cartArray)
-    console.log("NEW CART", cart)
-    localStorage.setItem(id, JSON.stringify(newCartItem))
-    setTotalPrice(prevState => prevState + cartItem.price)
+    // INCREMENTING AMOUNT FOR LOGGED USER TO BE IMPLEMENTED BELOW
     
   }
 
 
 
   const decrementAmount = (cartItem, setCartItem, id) => {
+    // FOR UNLOGGED USER
+      if(!Cookies.get("jwt")){
         let newCartItem = {
           ...cartItem,
           amount: cartItem.amount - 1
@@ -89,33 +110,11 @@ const Cart = () => {
           localStorage.setItem(id, JSON.stringify(newCartItem))
           setCartItem(newCartItem)
         }
-        
-          
-       
-        
-        
-      
-      
-
       }
+      // DECREMENTING AMOUNT FOR LOGGED USER TO BE IMPLEMENTED BELOW
+        
+  }
     
-    
-
-    
-    
-
-     
-    
-    
-    
-    
-    
-
-  
-
-
-
-
   const mappedCartItems = cart.map((element)=> {
     
         return <CartItem 

@@ -14,18 +14,16 @@ const Home = () => {
   const [formData, setFormData] = useState({
     type: ""
   })
-  const [cartItems, setCartItems] = React.useState([])
   const [loggedUserCart, setLoggedUserCart] = React.useState([])
-  const [userCart, setUserCart] = React.useState([])
   const [token, setToken] = React.useState("")
   
   useEffect(()=> {
     if(Cookies.get("jwt")){
       localStorage.clear()
       setToken(Cookies.get("jwt"))
-      console.log(jwtDecode(Cookies.get("jwt")).id)
+    
       axios.get(`http://localhost:5000/api/v1/users/${jwtDecode(Cookies.get("jwt")).id}`)
-    .then((res)=>{
+      .then((res)=>{
       console.log(res.data.data.singleUser.cartArray)
       setLoggedUserCart(prevState => res.data.data.singleUser.cartArray)
       console.log("USER CART:", loggedUserCart)
@@ -37,7 +35,7 @@ const Home = () => {
     axios.get("http://localhost:5000/api/v1/guns?limit=10")
     .then((res)=>setData(res.data.data.allGuns))
     .catch(err=>{
-      setError(err.message)
+      console.log(err)
     })
   
 
@@ -45,7 +43,7 @@ const Home = () => {
   }, [])
 
 function addToCart(props){
-  /// for user not logged in
+  /// FOR UNLOGGED USER
     if(token===""){
       if(JSON.parse(localStorage.getItem(props.id))===null){
         let cartItem = {
@@ -62,7 +60,7 @@ function addToCart(props){
         localStorage.setItem(props.id, JSON.stringify(cartItem))
        }
     }else {
-      /// for logged user
+      /// FOR LOGGED USER
       
       let foundCounter = 0;
       let newUserCart = loggedUserCart;
@@ -83,11 +81,6 @@ function addToCart(props){
           price: props.price,
           amount: 1}])
       }
-
-
-    
-      
-      
       axios.patch("http://localhost:5000/api/v1/users/updateMe", {
         cartArray: loggedUserCart,
         
