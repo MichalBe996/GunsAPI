@@ -48,13 +48,8 @@ const Cart = () => {
     
     
   },[])
-  
-  
-  
-  
-
-  
-  const incrementAmount = (cartItem, setCartItem, id) => {
+    
+    const incrementAmount = (cartItem, setCartItem, id) => {
     /// FOR UNLOGGED USER
     if(!Cookies.get("jwt")){
       let newCartItem = {
@@ -77,10 +72,7 @@ const Cart = () => {
     // INCREMENTING AMOUNT FOR LOGGED USER TO BE IMPLEMENTED BELOW
     
   }
-
-
-
-  const decrementAmount = (cartItem, setCartItem, id) => {
+    const decrementAmount = (cartItem, setCartItem, id) => {
     // FOR UNLOGGED USER
       if(!Cookies.get("jwt")){
         let newCartItem = {
