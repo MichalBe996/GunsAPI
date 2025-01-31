@@ -1,4 +1,5 @@
 import React from 'react'
+import Cookies from "js-cookie"
 
 const CartItem = (props) => {
  
@@ -29,10 +30,15 @@ const CartItem = (props) => {
                 <h4>Amount: {cartItem.amount}</h4>
                 <div className="cart--amount--buttons">
                     <button onClick={()=>{
-                      props.incrementAmount(cartItem, setCartItem, cartItem.id)
+
+                      Cookies.get("jwt") ? setCartItem({
+                        ...cartItem,
+                        amount: cartItem.amount + 1
+                      }) :props.incrementAmount(cartItem, setCartItem, cartItem.id)
                       
                     }}>+</button>
                     <button onClick={()=> {
+                      
                       props.decrementAmount(cartItem, setCartItem, cartItem.id)
                       
                     }}>-</button>

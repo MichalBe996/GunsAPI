@@ -14,11 +14,12 @@ const Cart = () => {
   const [storageKeys, setStorageKeys] = React.useState(Object.keys(localStorage))
   const [cart, setCart] = React.useState([])
   const [totalPrice, setTotalPrice] = React.useState(0)
+  const [token, setToken] = React.useState("")
   console.log("KEYS FROM STORAGE: ", storageKeys)
   
   React.useEffect(()=>{
     // FOR UNLOGGED USER
-    if(!Cookies.get("jtw")){
+    if(!Cookies.get("jwt")){
       let newCart = []
       if(storageKeys.length > 0){
         storageKeys.forEach(element=>{
@@ -39,10 +40,12 @@ const Cart = () => {
     }
     // FOR LOGGED USER
     else{
+      setToken(Cookies.get("jwt"))
       axios.get(`http://localhost:5000/api/v1/users/${jwtDecode(Cookies.get("jwt")).id}`)
       .then((res)=>{
         console.log(res.data.data.singleUser.cartArray)
         setCart(prevState => res.data.data.singleUser.cartArray)
+        console.log(cart)
         
       })}
     
@@ -70,6 +73,27 @@ const Cart = () => {
       setTotalPrice(prevState => prevState + cartItem.price)
     }
     // INCREMENTING AMOUNT FOR LOGGED USER TO BE IMPLEMENTED BELOW
+    else{
+      let newUserCart = cart;
+      newUserCart.forEach(element=>{
+        if(element.id===id){
+          element.amount += 1;
+          setCart(prevState => newUserCart)
+          axios.patch("http://localhost:5000/api/v1/users/updateMe", {
+            cartArray: cart,
+            
+          },{
+            headers: {
+              "Authorization":  `Bearer ${token}`
+              
+                        
+            }
+          })
+            .then(response => console.log(response.data))
+            .catch(error => console.error(error));
+        }
+      })
+    }
     
   }
     const decrementAmount = (cartItem, setCartItem, id) => {
