@@ -78,7 +78,7 @@ const Cart = () => {
       newUserCart.forEach(element=>{
         if(element.id===id){
           element.amount += 1;
-          setCart(prevState => newUserCart)
+          setCart(newUserCart)
           axios.patch("http://localhost:5000/api/v1/users/updateMe", {
             cartArray: cart,
             

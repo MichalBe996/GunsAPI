@@ -38,7 +38,10 @@ const CartItem = (props) => {
                       
                     }}>+</button>
                     <button onClick={()=> {
-                      
+                      Cookies.get("jwt") ? setCartItem({
+                        ...cartItem,
+                        amount: cartItem.amount - 1
+                      }) :
                       props.decrementAmount(cartItem, setCartItem, cartItem.id)
                       
                     }}>-</button>
