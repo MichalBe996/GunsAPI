@@ -44,7 +44,7 @@ const Cart = () => {
       axios.get(`http://localhost:5000/api/v1/users/${jwtDecode(Cookies.get("jwt")).id}`)
       .then((res)=>{
         console.log(res.data.data.singleUser.cartArray)
-        setCart(prevState => res.data.data.singleUser.cartArray)
+        setCart(res.data.data.singleUser.cartArray)
         console.log(cart)
         
       })}
@@ -128,7 +128,27 @@ const Cart = () => {
         }
       }
       // DECREMENTING AMOUNT FOR LOGGED USER TO BE IMPLEMENTED BELOW
-        
+        else{
+          let newUserCart = cart;
+      newUserCart.forEach(element=>{
+        if(element.id===id){
+          element.amount -= 1;
+          setCart(newUserCart)
+          axios.patch("http://localhost:5000/api/v1/users/updateMe", {
+            cartArray: cart,
+            
+          },{
+            headers: {
+              "Authorization":  `Bearer ${token}`
+              
+                        
+            }
+          })
+            .then(response => console.log(response.data))
+            .catch(error => console.error(error));
+        }
+      })
+        }
   }
     
   const mappedCartItems = cart.map((element)=> {
