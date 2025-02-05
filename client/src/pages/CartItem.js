@@ -1,5 +1,7 @@
 import React from 'react'
 import Cookies from "js-cookie"
+import axios from 'axios'
+import { jwtDecode } from 'jwt-decode'
 
 const CartItem = (props) => {
  
@@ -11,8 +13,25 @@ const CartItem = (props) => {
     price: props.price
 
   })
+  const [loggedUserCart, setLoggedUserCart] = React.useState([])
+  const [token, setToken] = React.useState([])
+  React.useEffect(()=>{
+    setToken(Cookies.get("jwt"))
+    axios.get(`http://localhost:5000/api/v1/users/${jwtDecode(Cookies.get("jwt")).id}`)
+    .then((res)=>{
+      console.log(res.data.data.singleUser.cartArray)
+      setLoggedUserCart(res.data.data.singleUser.cartArray)
+      console.log(loggedUserCart)
+      
+    })
+  }, [])
   
-
+  const incrementForLogged = () => {
+    let updatedCart = loggedUserCart;
+    setCartItem({
+      ...cartItem,
+      amount: cartItem.amount + 1})
+  }
   
     
    
@@ -34,7 +53,8 @@ const CartItem = (props) => {
                       Cookies.get("jwt") ? setCartItem({
                         ...cartItem,
                         amount: cartItem.amount + 1
-                      }) :props.incrementAmount(cartItem, setCartItem, cartItem.id)
+                      })
+                       :props.incrementAmount(cartItem, setCartItem, cartItem.id)
                       
                     }}>+</button>
                     <button onClick={()=> {
