@@ -31,6 +31,26 @@ const CartItem = (props) => {
     setCartItem({
       ...cartItem,
       amount: cartItem.amount + 1})
+      updatedCart.forEach(element=> {
+        if(element.id === cartItem.id){
+          element = cartItem
+        }
+        
+      })
+      axios.patch("http://localhost:5000/api/v1/users/updateMe", {
+        cartArray: updatedCart,
+        
+      },{
+        headers: {
+          "Authorization":  `Bearer ${token}`
+          
+                    
+        }
+      })
+        .then(response => console.log(response.data))
+        .catch(error => console.error(error));
+      
+      
   }
   
     
