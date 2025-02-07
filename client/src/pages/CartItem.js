@@ -52,6 +52,41 @@ const CartItem = (props) => {
       
       
   }
+
+
+  const decrementForLogged = () => {
+    let updatedCart = loggedUserCart;
+    setCartItem({
+      ...cartItem,
+      amount: cartItem.amount - 1})
+
+      updatedCart.forEach(element=> {
+        if(element.id === cartItem.id){
+          element = cartItem
+        }
+        
+      })
+      let newCart = [];
+      updatedCart.forEach(element=>{
+        if(element.amount > 0){
+          newCart.push(element)
+        }
+      })
+      axios.patch("http://localhost:5000/api/v1/users/updateMe", {
+        cartArray: updatedCart,
+        
+      },{
+        headers: {
+          "Authorization":  `Bearer ${token}`
+          
+                    
+        }
+      })
+        .then(response => console.log(response.data))
+        .catch(error => console.error(error));
+        window.location.reload();
+      
+  }
   
     
    
@@ -70,18 +105,12 @@ const CartItem = (props) => {
                 <div className="cart--amount--buttons">
                     <button onClick={()=>{
 
-                      Cookies.get("jwt") ? setCartItem({
-                        ...cartItem,
-                        amount: cartItem.amount + 1
-                      })
+                      Cookies.get("jwt") ? incrementForLogged()
                        :props.incrementAmount(cartItem, setCartItem, cartItem.id)
                       
                     }}>+</button>
                     <button onClick={()=> {
-                      Cookies.get("jwt") ? setCartItem({
-                        ...cartItem,
-                        amount: cartItem.amount - 1
-                      }) :
+                      Cookies.get("jwt") ? decrementForLogged() :
                       props.decrementAmount(cartItem, setCartItem, cartItem.id)
                       
                     }}>-</button>
