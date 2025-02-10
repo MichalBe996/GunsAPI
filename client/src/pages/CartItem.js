@@ -84,7 +84,7 @@ const CartItem = (props) => {
       })
         .then(response => console.log(response.data))
         .catch(error => console.error(error));
-        window.location.reload();
+        
       
   }
   
