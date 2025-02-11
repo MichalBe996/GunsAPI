@@ -54,7 +54,7 @@ const Cart = () => {
     
     const incrementAmount = (cartItem, setCartItem, id) => {
     /// FOR UNLOGGED USER
-    if(!Cookies.get("jwt")){
+    // if(!Cookies.get("jwt")){
       let newCartItem = {
         ...cartItem,
         amount: cartItem.amount + 1
@@ -71,34 +71,34 @@ const Cart = () => {
       console.log("NEW CART", cart)
       localStorage.setItem(id, JSON.stringify(newCartItem))
       setTotalPrice(prevState => prevState + cartItem.price)
-    }
+    // }
     // INCREMENTING AMOUNT FOR LOGGED USER TO BE IMPLEMENTED BELOW
-    else{
-      let newUserCart = cart;
-      newUserCart.forEach(element=>{
-        if(element.id===id){
-          element.amount += 1;
-          setCart(newUserCart)
-          axios.patch("http://localhost:5000/api/v1/users/updateMe", {
-            cartArray: cart,
+    // else{
+    //   let newUserCart = cart;
+    //   newUserCart.forEach(element=>{
+    //     if(element.id===id){
+    //       element.amount += 1;
+    //       setCart(newUserCart)
+    //       axios.patch("http://localhost:5000/api/v1/users/updateMe", {
+    //         cartArray: cart,
             
-          },{
-            headers: {
-              "Authorization":  `Bearer ${token}`
+    //       },{
+    //         headers: {
+    //           "Authorization":  `Bearer ${token}`
               
                         
-            }
-          })
-            .then(response => console.log(response.data))
-            .catch(error => console.error(error));
-        }
-      })
-    }
+    //         }
+    //       })
+    //         .then(response => console.log(response.data))
+    //         .catch(error => console.error(error));
+    //     }
+    //   })
+    // }
     
   }
     const decrementAmount = (cartItem, setCartItem, id) => {
-    // FOR UNLOGGED USER
-      if(!Cookies.get("jwt")){
+    // // FOR UNLOGGED USER
+    //   if(!Cookies.get("jwt")){
         let newCartItem = {
           ...cartItem,
           amount: cartItem.amount - 1
@@ -126,29 +126,29 @@ const Cart = () => {
           localStorage.setItem(id, JSON.stringify(newCartItem))
           setCartItem(newCartItem)
         }
-      }
+    // }
       // DECREMENTING AMOUNT FOR LOGGED USER TO BE IMPLEMENTED BELOW
-        else{
-          let newUserCart = cart;
-      newUserCart.forEach(element=>{
-        if(element.id===id){
-          element.amount -= 1;
-          setCart(newUserCart)
-          axios.patch("http://localhost:5000/api/v1/users/updateMe", {
-            cartArray: cart,
+      //   else{
+      //     let newUserCart = cart;
+      // newUserCart.forEach(element=>{
+      //   if(element.id===id){
+      //     element.amount -= 1;
+      //     setCart(newUserCart)
+      //     axios.patch("http://localhost:5000/api/v1/users/updateMe", {
+      //       cartArray: cart,
             
-          },{
-            headers: {
-              "Authorization":  `Bearer ${token}`
+      //     },{
+      //       headers: {
+      //         "Authorization":  `Bearer ${token}`
               
                         
-            }
-          })
-            .then(response => console.log(response.data))
-            .catch(error => console.error(error));
-        }
-      })
-        }
+      //       }
+      //     })
+      //       .then(response => console.log(response.data))
+      //       .catch(error => console.error(error));
+      //   }
+      // })
+      //   }
   }
     
   const mappedCartItems = cart.map((element)=> {

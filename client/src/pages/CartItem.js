@@ -21,7 +21,8 @@ const CartItem = (props) => {
     .then((res)=>{
       console.log(res.data.data.singleUser.cartArray)
       setLoggedUserCart(res.data.data.singleUser.cartArray)
-      console.log(loggedUserCart)
+      console.log(token)
+      
       
     })
   }, [])
@@ -33,10 +34,11 @@ const CartItem = (props) => {
       amount: cartItem.amount + 1})
       updatedCart.forEach(element=> {
         if(element.id === cartItem.id){
-          element = cartItem
+          element.amount += 1
         }
         
       })
+      console.log("INCREMENTED: ", updatedCart)
       axios.patch("http://localhost:5000/api/v1/users/updateMe", {
         cartArray: updatedCart,
         
@@ -72,8 +74,9 @@ const CartItem = (props) => {
           newCart.push(element)
         }
       })
+      console.log("DECREMENTED: ", newCart)
       axios.patch("http://localhost:5000/api/v1/users/updateMe", {
-        cartArray: updatedCart,
+        cartArray: newCart,
         
       },{
         headers: {
