@@ -64,7 +64,7 @@ const CartItem = (props) => {
 
       updatedCart.forEach(element=> {
         if(element.id === cartItem.id){
-          element = cartItem
+          element.amount -= 1
         }
         
       })
@@ -74,7 +74,7 @@ const CartItem = (props) => {
           newCart.push(element)
         }
       })
-      console.log("DECREMENTED: ", newCart)
+      console.log("REDUCED CART",newCart)
       axios.patch("http://localhost:5000/api/v1/users/updateMe", {
         cartArray: newCart,
         
@@ -87,7 +87,9 @@ const CartItem = (props) => {
       })
         .then(response => console.log(response.data))
         .catch(error => console.error(error));
-        
+      if(cartItem.amount === 1){
+        window.location.reload()
+      }
       
   }
   
