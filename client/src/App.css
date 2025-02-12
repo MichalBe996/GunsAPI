@@ -490,6 +490,8 @@ button:active:not(:focus-visible) {
 }
 
 .footer-div {
+  position: fixed;
+  bottom: 0;
   height: 2.5rem;
   color: white;
   background-color: #6082B6;
