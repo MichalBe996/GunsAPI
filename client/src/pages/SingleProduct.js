@@ -4,6 +4,8 @@ import Navbar from './Navbar'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import Footer from './Footer'
+import Cookies from "js-cookie"
+import { jwtDecode } from 'jwt-decode'
 
 
 
@@ -17,14 +19,30 @@ const SingleProduct = () => {
     const { id } = useParams();
     const [data, setData] = useState([])
     const [error, setError] = useState("")
+    const [loggedUserCart, setLoggedUserCart] = React.useState([])
+    const [token, setToken] = React.useState([])
     useEffect(()=>{
         axios.get(`http://localhost:5000/api/v1/guns/${id}`)
         .then((res)=> setData(res.data.data.singleGun))
         .catch(err=> setError(err.message))
+        setToken(Cookies.get("jwt"))
+        axios.get(`http://localhost:5000/api/v1/users/${jwtDecode(Cookies.get("jwt")).id}`)
+        .then((res)=>{
+        console.log(res.data.data.singleUser.cartArray)
+        setLoggedUserCart(res.data.data.singleUser.cartArray)
+      
+      
+      
+    })
         
         
     }, [])
+    const incrementForLogged = () => {
 
+    }
+    const decrementForLogged = () => {
+      
+    }
     function addToCart(){
       if(JSON.parse(localStorage.getItem(id))===null){
        let cartItem = {
