@@ -38,11 +38,27 @@ const SingleProduct = () => {
         
     }, [])
     const incrementForLogged = () => {
-
+        let newLoggedCart = loggedUserCart;
+        newLoggedCart.forEach(element=>{
+          if(element.id===id){
+            element.amount += 1
+          }
+        })
+        setLoggedUserCart(newLoggedCart)
+        axios.patch("http://localhost:5000/api/v1/users/updateMe", {
+          cartArray: newLoggedCart,
+          
+        },{
+          headers: {
+            "Authorization":  `Bearer ${token}`
+            
+                      
+          }
+        })
+          .then(response => console.log(response.data))
+          .catch(error => console.error(error));
     }
-    const decrementForLogged = () => {
-      
-    }
+    
     function addToCart(){
       if(JSON.parse(localStorage.getItem(id))===null){
        let cartItem = {
@@ -87,7 +103,8 @@ const SingleProduct = () => {
                 <h3>Capacity: {data.capacity}</h3>
                 <div className="single--card--buttons">
                    <button className="single--card--button"onClick={redirectBack}>Go Back</button>
-                   <button className='single--card--button' onClick={addToCart}>Add to Cart</button>
+                   <button className='single--card--button' onClick={Cookies.get("jwt")? 
+                   incrementForLogged : addToCart}>Add to Cart</button>
         </div>
               </div>
         </div>
