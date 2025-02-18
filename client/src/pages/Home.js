@@ -25,7 +25,7 @@ const Home = () => {
       axios.get(`http://localhost:5000/api/v1/users/${jwtDecode(Cookies.get("jwt")).id}`)
       .then((res)=>{
       console.log(res.data.data.singleUser.cartArray)
-      setLoggedUserCart(prevState => res.data.data.singleUser.cartArray)
+      setLoggedUserCart(res.data.data.singleUser.cartArray)
       console.log("USER CART:", loggedUserCart)
     })
     .catch(err=>{
