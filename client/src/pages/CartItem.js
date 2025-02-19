@@ -10,7 +10,8 @@ const CartItem = (props) => {
     name: props.name,
     img: props.img,
     amount: props.amount,
-    price: props.price
+    price: props.price,
+   
 
   })
   const [loggedUserCart, setLoggedUserCart] = React.useState([])
@@ -51,6 +52,8 @@ const CartItem = (props) => {
       })
         .then(response => console.log(response.data))
         .catch(error => console.error(error));
+
+        props.setTotalPrice(prevState => prevState + cartItem.price)
       
       
   }
@@ -87,6 +90,7 @@ const CartItem = (props) => {
       })
         .then(response => console.log(response.data))
         .catch(error => console.error(error));
+        props.setTotalPrice(prevState => prevState - cartItem.price)
       if(cartItem.amount === 1){
         window.location.reload()
       }

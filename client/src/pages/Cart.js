@@ -47,7 +47,11 @@ const Cart = () => {
         setCart(res.data.data.singleUser.cartArray)
         console.log(cart)
         
-      })}
+      })
+      cart.forEach(element=>{
+        setTotalPrice(prevState=> prevState + element.amount * element.price)
+      })
+    }
     
     
   },[])
@@ -113,6 +117,7 @@ const Cart = () => {
         id={element.id}
         incrementAmount={incrementAmount}
         decrementAmount={decrementAmount}
+        setTotalPrice={setTotalPrice}
         
         
   
