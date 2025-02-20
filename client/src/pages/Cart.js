@@ -39,13 +39,12 @@ const Cart = () => {
       }
     }
     // FOR LOGGED USER
-    else{
-      setToken(Cookies.get("jwt"))
+    if(Cookies.get("jwt")){
       axios.get(`http://localhost:5000/api/v1/users/${jwtDecode(Cookies.get("jwt")).id}`)
       .then((res)=>{
-        console.log(res.data.data.singleUser.cartArray)
-        setCart(res.data.data.singleUser.cartArray)
-        console.log(cart)
+        console.log("FIRST CART", res.data.data.singleUser.cartArray)
+        setCart(prevState => res.data.data.singleUser.cartArray)
+        console.log("CART", cart)
         
       })
       cart.forEach(element=>{

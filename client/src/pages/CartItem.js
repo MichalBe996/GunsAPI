@@ -20,9 +20,9 @@ const CartItem = (props) => {
     setToken(Cookies.get("jwt"))
     axios.get(`http://localhost:5000/api/v1/users/${jwtDecode(Cookies.get("jwt")).id}`)
     .then((res)=>{
-      console.log(res.data.data.singleUser.cartArray)
+      console.log("THIS IS CART", res.data.data.singleUser.cartArray)
       setLoggedUserCart(res.data.data.singleUser.cartArray)
-      console.log(token)
+  
       
       
     })
