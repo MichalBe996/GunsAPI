@@ -14,6 +14,7 @@ const CartItem = (props) => {
    
 
   })
+  
   const [loggedUserCart, setLoggedUserCart] = React.useState([])
   const [token, setToken] = React.useState([])
   React.useEffect(()=>{
@@ -22,10 +23,16 @@ const CartItem = (props) => {
     .then((res)=>{
       console.log("THIS IS CART", res.data.data.singleUser.cartArray)
       setLoggedUserCart(res.data.data.singleUser.cartArray)
+      
+      
+       
+      
   
       
       
     })
+    
+      
   }, [])
   
   const incrementForLogged = () => {
