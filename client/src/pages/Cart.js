@@ -14,6 +14,7 @@ const Cart = () => {
   const [storageKeys, setStorageKeys] = React.useState(Object.keys(localStorage))
   const [cart, setCart] = React.useState([])
   const [totalPrice, setTotalPrice] = React.useState(0)
+  const [totalCartPrice, setTotalCartPrice] = React.useState(0)
   const [token, setToken] = React.useState("")
   console.log("KEYS FROM STORAGE: ", storageKeys)
   
@@ -34,27 +35,32 @@ const Cart = () => {
             localStorage.removeItem(element.id)
             let newCart = cart.filter(function(element){return element.amount !== 0})
             setCart(newCart)
+            
           }
         })
       }
     }
     // FOR LOGGED USER
     if(Cookies.get("jwt")){
+      console.log("USER IS LOGGED ON CART PAGE")
       axios.get(`http://localhost:5000/api/v1/users/${jwtDecode(Cookies.get("jwt")).id}`)
       .then((res)=>{
         console.log("FIRST CART", res.data.data.singleUser.cartArray)
         setCart(prevState => res.data.data.singleUser.cartArray)
         console.log("CART", cart)
+          
+         
+        
         
       })
-      cart.forEach(element=>{
-        setTotalPrice(prevState=> prevState + element.amount * element.price)
-      })
+      
+        
     }
     
+        
+  }, [])
     
-  },[])
-    
+    console.log("TOTAL CART PRICE TEST OUT OF LOOP")
     const incrementAmount = (cartItem, setCartItem, id) => {
     let newCartItem = {
         ...cartItem,
@@ -116,8 +122,7 @@ const Cart = () => {
         id={element.id}
         incrementAmount={incrementAmount}
         decrementAmount={decrementAmount}
-        setTotalPrice={setTotalPrice}
-        totalPrice={totalPrice}
+
         
         
   
@@ -137,7 +142,7 @@ const Cart = () => {
             </div>
             <div className="cart--summary">
                 <h2>Cart summary: {cart.length === 0 && <h2>Your cart is empty!</h2>}</h2>
-                {cart.length !== 0 && <h3>Total price: {totalPrice.toFixed(2)}$</h3>}
+                {cart.length !== 0 && <h3>Total price: {totalCartPrice.toFixed(2)}$</h3>}
             </div>
 
         </div>

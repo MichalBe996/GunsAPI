@@ -24,7 +24,6 @@ const CartItem = (props) => {
       console.log("THIS IS CART", res.data.data.singleUser.cartArray)
       setLoggedUserCart(res.data.data.singleUser.cartArray)
       
-      
        
       
   
