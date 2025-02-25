@@ -122,6 +122,7 @@ const Cart = () => {
         id={element.id}
         incrementAmount={incrementAmount}
         decrementAmount={decrementAmount}
+        setCartPrice = {setTotalCartPrice}
 
         
         

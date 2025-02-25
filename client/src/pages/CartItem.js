@@ -14,6 +14,11 @@ const CartItem = (props) => {
    
 
   })
+  function updateTotalPriceCart(array){
+    array.forEach(element=>{
+      props.setCartPrice(prevState => prevState + element.amount * element.price)
+    })
+  }
   
   const [loggedUserCart, setLoggedUserCart] = React.useState([])
   const [token, setToken] = React.useState([])
@@ -22,14 +27,22 @@ const CartItem = (props) => {
     axios.get(`http://localhost:5000/api/v1/users/${jwtDecode(Cookies.get("jwt")).id}`)
     .then((res)=>{
       console.log("THIS IS CART", res.data.data.singleUser.cartArray)
+      updateTotalPriceCart(res.data.data.singleUser.cartArray)
       setLoggedUserCart(res.data.data.singleUser.cartArray)
       
-       
+      
+      
+    
+      
+    
       
   
       
       
     })
+    
+    
+    
     
       
   }, [])
@@ -59,7 +72,7 @@ const CartItem = (props) => {
         .then(response => console.log(response.data))
         .catch(error => console.error(error));
 
-        props.setTotalPrice(prevState => prevState + cartItem.price)
+        
       
       
   }
@@ -96,7 +109,7 @@ const CartItem = (props) => {
       })
         .then(response => console.log(response.data))
         .catch(error => console.error(error));
-        props.setTotalPrice(prevState => prevState - cartItem.price)
+        
       if(cartItem.amount === 1){
         window.location.reload()
       }
