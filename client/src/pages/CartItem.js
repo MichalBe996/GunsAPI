@@ -58,6 +58,7 @@ const CartItem = (props) => {
         }
         
       })
+      props.setCartPrice(prevState=> prevState + cartItem.price)
       console.log("INCREMENTED: ", updatedCart)
       axios.patch("http://localhost:5000/api/v1/users/updateMe", {
         cartArray: updatedCart,
@@ -90,6 +91,7 @@ const CartItem = (props) => {
         }
         
       })
+      props.setCartPrice(prevState=> prevState - cartItem.price)
       let newCart = [];
       updatedCart.forEach(element=>{
         if(element.amount > 0){
