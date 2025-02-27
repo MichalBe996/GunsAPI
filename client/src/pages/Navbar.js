@@ -40,7 +40,7 @@ const Navbar = () => {
   const logoutUser = () => {
     Cookies.remove("jwt")
     setToken("")
-    window.location.reload()
+    navigate("/")
   }
   
   

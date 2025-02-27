@@ -24,7 +24,7 @@ const MyAccount = () => {
         <div className="my-account-body">
         <h1>Hello, {accountData.name}!</h1>
         <h3>E-mail: {accountData.email}</h3>
-        <div>
+        <div className='account-buttons-div'>
           <button>Change email</button>
           <button>Change password</button>
         </div>
