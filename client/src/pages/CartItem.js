@@ -93,11 +93,21 @@ const CartItem = (props) => {
       })
       props.setCartPrice(prevState=> prevState - cartItem.price)
       let newCart = [];
-      updatedCart.forEach(element=>{
-        if(element.amount >= 1){
+      if(cartItem.amount >= 1){
+        updatedCart.forEach(element=>{
+        
           newCart.push(element)
-        }
+        
       })
+      }else{
+        updatedCart.forEach(element=>{
+          if(element.id !== cartItem.id){
+            newCart.push(element)
+          }
+        })
+      }
+      
+      
       
       console.log("REDUCED CART",newCart)
       axios.patch("http://localhost:5000/api/v1/users/updateMe", {
@@ -112,33 +122,8 @@ const CartItem = (props) => {
       })
         .then(response => console.log(response.data))
         .catch(error => console.error(error));
-        
-        if(cartItem.amount === 1){
-          newCart = []
-          updatedCart.forEach(element=>{
-            if(element.id !== cartItem.id){
-              newCart.push(element)
-            }
-          })
-          axios.patch("http://localhost:5000/api/v1/users/updateMe", {
-            cartArray: newCart,
-            
-          },{
-            headers: {
-              "Authorization":  `Bearer ${token}`
-              
-                        
-            }
-          })
-            .then(response => console.log(response.data))
-            .catch(error => console.error(error));
-        
-        
-          window.location.reload()
-        }
-      
-      
-  }
+        window.location.reload()
+      }
   
     
    
