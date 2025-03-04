@@ -80,38 +80,51 @@ const CartItem = (props) => {
 
 
   const decrementForLogged = () => {
+    let newCart = [];
     let updatedCart = loggedUserCart;
-    setCartItem({
-      ...cartItem,
-      amount: cartItem.amount - 1})
-
-      updatedCart.forEach(element=> {
-        if(element.id === cartItem.id){
-          element.amount -= 1
-        }
+    if(cartItem.amount === 1){
         
-      })
-      props.setCartPrice(prevState=> prevState - cartItem.price)
-      let newCart = [];
-      if(cartItem.amount >= 1){
-        updatedCart.forEach(element=>{
-        
+      updatedCart.forEach(element=>{
+        if(element.id !== cartItem.id){
           newCart.push(element)
-        
-      })
-      }else{
-        updatedCart.forEach(element=>{
-          if(element.id !== cartItem.id){
-            newCart.push(element)
-          }
-        })
+        }
+      
+      
+    
+  })
+  axios.patch("http://localhost:5000/api/v1/users/updateMe", {
+    cartArray:  newCart,
+    
+  },{
+    headers: {
+      "Authorization":  `Bearer ${token}`
+      
+                
+    }
+  })
+    .then(response => console.log(response.data))
+    .catch(error => console.error(error));
+    window.location.reload()
+}else{
+  setCartItem({
+    ...cartItem,
+    amount: cartItem.amount - 1})
+
+    updatedCart.forEach(element=> {
+      if(element.id === cartItem.id){
+        element.amount -= 1
       }
       
-      
-      
-      console.log("REDUCED CART",newCart)
+    })
+    props.setCartPrice(prevState=> prevState - cartItem.price)
+    
+    
+    
+
+    
+      setLoggedUserCart(updatedCart)
       axios.patch("http://localhost:5000/api/v1/users/updateMe", {
-        cartArray: newCart,
+        cartArray: updatedCart,
         
       },{
         headers: {
@@ -122,12 +135,17 @@ const CartItem = (props) => {
       })
         .then(response => console.log(response.data))
         .catch(error => console.error(error));
-        window.location.reload()
-      }
+    }
+}
+    
+
+      
+        
+      
   
     
    
-
+    
     
   
   return (
