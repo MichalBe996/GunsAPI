@@ -82,16 +82,20 @@ const CartItem = (props) => {
   const decrementForLogged = () => {
     let newCart = [];
     let updatedCart = loggedUserCart;
+    setCartItem({
+      ...cartItem,
+      amount: cartItem.amount - 1})
     if(cartItem.amount === 1){
         
       updatedCart.forEach(element=>{
         if(element.id !== cartItem.id){
           newCart.push(element)
         }
-      
+      console.log("CART AFTER DECREMENTING", newCart)
       
     
   })
+  setLoggedUserCart(newCart)
   axios.patch("http://localhost:5000/api/v1/users/updateMe", {
     cartArray:  newCart,
     
@@ -106,9 +110,7 @@ const CartItem = (props) => {
     .catch(error => console.error(error));
     window.location.reload()
 }else{
-  setCartItem({
-    ...cartItem,
-    amount: cartItem.amount - 1})
+  
 
     updatedCart.forEach(element=> {
       if(element.id === cartItem.id){
