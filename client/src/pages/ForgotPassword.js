@@ -1,6 +1,7 @@
 import React from 'react'
 import Navbar from './Navbar'
 import Footer from './Footer'
+import axios from "axios"
 
 const ForgotPassword = () => {
   const [email, setEmail] = React.useState("")
@@ -14,9 +15,28 @@ const ForgotPassword = () => {
     
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     console.log("DATA SUBMITTED", email)
+    await axios.post(
+      "http://localhost:5000/api/v1/users/forgotPassword",{
+          email: email
+      },{
+          headers: {
+              "Content-Type": "application/json",
+              withCredentials: true,
+              
+              
+          }
+      }
+  )
+  .then((res)=>{
+      console.log("Server response: ", res)
+  
+  })
+  .catch((err)=>{
+      console.log("Server error: ", err)
+  })
   }
   return (
     <div>
