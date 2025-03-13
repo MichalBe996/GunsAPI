@@ -55,10 +55,14 @@ const Navbar = () => {
             <h1 className="header">GunsApp</h1>
             <img className="target--logo" src={target}></img>
             
+            
         </div>
         <div className="buttons--navbar">
-            
-            <button onClick={homeRedirect}>Home</button>
+          <span>
+            MENU
+          </span>
+          <div className='dropdown-content'>
+          <button onClick={homeRedirect}>Home</button>
             <button onClick={cartRedirect}>Cart</button>
             {(token ==="") && <button onClick={registerRedirect}>Register</button>
             }
@@ -69,6 +73,9 @@ const Navbar = () => {
             
             
             <button onClick={aboutRedirect}>About</button>
+          </div>
+            
+            
         </div>
     
     <Outlet/>
