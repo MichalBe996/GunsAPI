@@ -58,7 +58,7 @@ const Navbar = () => {
             
         </div>
         <div className="buttons--navbar">
-          <span>
+          <span className="dropdown-menu">
             MENU
           </span>
           <div className='dropdown-content'>
